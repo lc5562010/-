@@ -1,0 +1,462 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  min-width: 1200px;
+  background: #2d2c41;
+  font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
+}
+.clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  clear: both;
+}
+.warning {
+  color: #f00;
+}
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 1035;
+  background: #23262e;
+}
+.view {
+  min-width: 1000px;
+  padding: 15px;
+  position: absolute;
+  left: 200px;
+  right: 0;
+  top: 60px;
+  width: auto;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.space label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.space input,
+.space select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.addSpace {
+  float: right;
+}
+.space p {
+  margin: 20px auto;
+}
+.space_list {
+  width: 98%;
+  background: #fff;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 2px 2px 3px #666;
+}
+.space_list .space_listLeft {
+  width: 30%;
+  height: 312px;
+  float: left;
+  position: relative;
+}
+.space_list .space_listLeft img {
+  width: 100%;
+  height: 100%;
+}
+.space_list .space_listLeft span {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 20px;
+  background-color: #e6a707;
+  text-align: center;
+  color: #f0f0f0;
+}
+.space_list .space_listRight {
+  width: 65%;
+  float: left;
+  margin: 0 15px;
+}
+.space_list .space_listRight p {
+  margin: 20px auto;
+}
+#show_img {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2222;
+}
+#show_img span {
+  display: table-cell;
+  vertical-align: middle;
+  z-index: 2222;
+}
+#show_img .left_btn {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  background: url(../img/3cee.png) no-repeat center left;
+  background-size: cover;
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  margin-top: -35px;
+  z-index: 2224;
+  cursor: pointer;
+}
+#show_img .right_btn {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  background: url(../img/3cee.png) no-repeat center right;
+  background-size: cover;
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  margin-top: -35px;
+  z-index: 2224;
+  cursor: pointer;
+}
+.ference label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.ference input,
+.ference select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.ference p {
+  margin: 20px auto;
+}
+.member label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.member input,
+.member select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.member p {
+  margin: 20px auto;
+}
+.station label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.station input,
+.station select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.station p {
+  margin: 20px auto;
+}
+.station .left-wrapper {
+  float: left;
+  width: 200px;
+}
+.station .left-wrapper li {
+  cursor: pointer;
+}
+.station .left-wrapper li span {
+  color: #fff;
+}
+.station .stationList {
+  margin-top: 20px;
+  margin-left: 200px;
+}
+.station .stationList .stationBox {
+  display: inline-block;
+  margin-left: 20px;
+  margin-bottom: 15px;
+  width: 100px;
+  height: 100px;
+  border: solid 1px #fff;
+}
+.station .stationList .stationBox span {
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+.enterprise label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.enterprise input,
+.enterprise select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.enterprise p {
+  margin: 20px auto;
+}
+.activity label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.activity input,
+.activity select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.activity p {
+  margin: 20px auto;
+}
+.activity td {
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.add_activity label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+  color: #fff;
+}
+.add_activity input,
+.add_activity select,
+.add_activity textarea {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.add_activity p {
+  margin: 20px auto;
+}
+.information label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.information input,
+.information select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.information p {
+  margin: 20px auto;
+}
+.information td {
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.add_information label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+  color: #fff;
+}
+.add_information input,
+.add_information select,
+.add_information textarea {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.add_information p {
+  margin: 20px auto;
+}
+.department label {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+.department input,
+.department select {
+  margin-left: 30px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
+  /*css3属性IE不支持*/
+}
+.department p {
+  margin: 20px auto;
+}
+.department .left-wrapper {
+  float: left;
+  width: 200px;
+}
+.department .left-wrapper li {
+  cursor: pointer;
+}
+.department .left-wrapper li span {
+  color: #fff;
+}
+.department .departmentList {
+  float: left;
+  width: 100%;
+}
+.department .departmentList table {
+  margin-top: 20px;
+  color: #fff;
+}
+.social {
+  overflow: hidden;
+}
+.social .comment-show-con {
+  width: 100%;
+  border-top: 1px solid #EDEDED;
+  padding: 10px 0;
+}
+.social .comment-show-con .comment-show-con-img {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+.social .comment-show-con .pull-left {
+  float: left !important;
+}
+.social .comment-show-con .comment-show-con-list {
+  width: 85%;
+  margin-left: 3%;
+}
+.social .comment-show-con .comment-show-con-list .pl-text {
+  width: 100%;
+  margin-top: 7px;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+.social .comment-show-con .comment-show-con-list .pl-text .comment-size-name {
+  font-size: 12px;
+  color: #339b53;
+}
+.social .comment-show-con .comment-show-con-list .pl-text a {
+  text-decoration: none;
+}
+.social .comment-show-con .comment-show-con-list .date-dz {
+  width: 100%;
+  float: left;
+}
+.social .comment-show-con .comment-show-con-list .date-dz .comment-time,
+.social .comment-show-con .comment-show-con-list .date-dz .comment-pl-block {
+  padding-top: 7px;
+}
+.social .comment-show-con .comment-show-con-list .date-dz .date-dz-left {
+  font-size: 12px;
+  color: #8b8b8b;
+  display: block;
+  padding-top: 18px;
+}
+.social .comment-show-con .comment-show-con-list .frendInfo {
+  margin: 10px auto;
+}
+.social .comment-show-con .comment-show-con-list .hf-list-con {
+  float: left;
+  width: 100%;
+  background-color: #eaeaec;
+  margin-top: 7px;
+}
+.social .comment-show-con .comment-show-con-list .hf-list-con .all-pl-con {
+  width: 96%;
+  padding: 3px 0;
+  float: left;
+  margin: 0 2%;
+  padding-bottom: 12px;
+}

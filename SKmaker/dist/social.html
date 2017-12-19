@@ -1,0 +1,49 @@
+
+<div class="social">
+<!--朋友圈列表-->
+	<div style="margin-top: 20px;color: #fff;overflow: hidden;">
+		<div ng-repeat="social in socialInfo">
+			<div class="comment-show-con clearfix">
+				<div class="comment-show-con-img pull-left">
+					<img src="{{social.userUrl}}" alt="" />
+				</div>
+				<div class="comment-show-con-list pull-left clearfix">
+					<div class="pl-text clearfix">
+						<a href="#" class="comment-size-name" ng-bind="social.userName"></a>
+					</div>
+					<div class="clearfix">
+						<div class="date-dz">
+							<span class="date-dz-left pull-left comment-time" ng-bind="social.friendTime"></span>
+							<span class="date-dz-left pull-right comment-time">
+								<button class="layui-btn addSpace" ng-click="del_social($index,socialInfo)">
+								    <i class="layui-icon">&#xe640;</i>删除
+								</button>
+							</span>
+						</div>
+					</div>
+					<div class="frendInfo" ng-bind="social.circleMessage"></div>
+					<div class="clearfix img-gather" id="thumbs" style="height: 100px;">
+			            <!--<a ng-repeat="img in social.imageMessage track by $index" href="{{img}}" style="background-image:url({{img}});"></a> -->
+			            <img ng-repeat="img in social.imageMessage track by $index" src="{{img}}" width="100px" height="100px" alt="" />
+			        </div>
+					<div class="hf-list-con">
+						<div class="all-pl-con" ng-repeat="reply in social.ReplyRecord">
+							<div class="pl-text hfpl-text clearfix">
+								<a href="#" class="comment-size-name" ng-bind="reply.replyName"></a>
+								<span class="my-pl-con" style="color: #000;">回复</span>
+								<a href="#" class="comment-size-name" ng-bind="reply.byReplyname"></a>
+								<span class="my-pl-con" style="color: #000;">：</span>
+								<span class="my-pl-con" style="color: #000;" ng-bind="reply.replyInfo"></span>
+							</div>
+							<div class="date-da">
+								<span class="date-dz-left pull-left comment-time" ng-bind="reply.replyTime" style="color: #333;margin-top: 5px;"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="test_social"></div>
+	</div>
+</div>
+

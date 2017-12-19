@@ -1,0 +1,206 @@
+<div class="ference">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_ference" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_ference">
+		    <i class="layui-icon">&#xe608;</i> 添加场地
+		</button>
+		<!--<button class="layui-btn addSpace" style="margin-right: 50px;" ng-click="examine()">
+		    <i class="layui-icon">&#xe618;</i> 预约会议室审核
+		</button>-->
+	</div>
+<!--会议室列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>名称</th>
+			      <th>描述</th>
+			      <th>开放时间</th>
+			      <th>位置</th>
+			      <th>状态</th>
+			      <th>价格</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="ference in ferenceInfo">
+			      <td>{{ference.conferenceName}}</td>
+			      <td>{{ference.conferenceDescribe}}</td>
+			      <td>{{ference.openTime}}</td>
+			      <td>{{ference.location}}</td>
+			      <td>{{ference.conferenceState}}</td>
+			      <td>{{ference.conferencePrice}}</td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_ference_edit" ng-click="edit_ference($index,ferenceInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_ference($index,ferenceInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_ference"></div>
+	</div>
+	<!--大图展示-->
+	<div id="show_img">
+	    <span class="left_btn"></span>
+	    <span><img src="" style="max-height: 60%;max-width: 60%;z-index: 2222"></span>
+	    <span class="right_btn"></span>
+	</div>
+<!--添加会议室弹出框-->
+	<div class="modal fade" id="myModal_ference" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加场地</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="ferenceForm" novalidate method="post" enctype="multipart/form-data" id="add_ferenceform">
+	            		<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_addference">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+			        	</p>
+			        	<p>
+			        		<label for="conferenceName">名称</label>
+				        	<input type="text" name="conferenceName" id="conferenceName" ng-model="conferenceName" required="required" />
+				        	<span class="warning" ng-show="ferenceForm.conferenceName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="conferenceDescribe">描述</label>
+				        	<input type="text" name="conferenceDescribe" id="conferenceDescribe" ng-model="conferenceDescribe" required="required" />
+				        	<span class="warning" ng-show="ferenceForm.conferenceDescribe.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="openTime">开放时间</label>
+				        	<input type="text" name="openTime" id="openTime" placeholder=" - ">
+				        	<span class="warning">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceSite">位置</label>
+				        	<input type="text" name="location" id="location" ng-model="location" required="required" />
+				        	<span class="warning" ng-show="ferenceForm.location.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="conferenceState">状态</label>
+				        	<select id="conferenceState" name="conferenceState">
+	                            <option value="0">不可使用</option>
+	                            <option value="1">需要审核</option>
+	                            <option value="2">会员无需审核</option>
+	                            <option value="3">对外开放</option>
+	                       </select>
+			        	</p>
+			        	<p style="display: none;">
+			        		<input type="text" name="conferenceType" value="1" />
+			        	</p>
+			        	<p>
+			        		<label for="conferencePrice">价格</label>
+				        	<input type="number" name="conferencePrice" id="conferencePrice" ng-model="conferencePrice" required="required" />
+				        	<span class="warning" ng-show="ferenceForm.conferencePrice.$error.required">*</span>
+				        	<span class="warning" ng-show="ferenceForm.conferencePrice.$error.number">只能输入数字</span>
+			        	</p>
+			        	<p>
+			        		<label for="upfile">图片</label>
+			        		<span class="warning" style="margin-left: 30px;">按住ctrl可多选，最多可以上传4张图片。</span>
+			        		<input type="file" name="file" id="ment_addference" accept="image/*" class="putImg" multiple>
+			        		<span class="imgBox">
+			        			<img id="imageview" class="showImg">
+			        			<img id="imageview1" class="showImg">
+			        			<img id="imageview2" class="showImg">
+			        			<img id="imageview3" class="showImg">
+			        		</span>
+			            </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="ferenceForm.$invalid" ng-click="addFerence()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改会议室弹出框-->
+	<div class="modal fade" id="myModal_ference_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改场地</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="ferenceForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_ferenceform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_editference">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+			        	</p>
+			        	<p>
+			        		<label for="conferenceName">名称</label>
+				        	<input type="text" name="conferenceName" id="conferenceName" ng-model="edit_ferenceInfo.conferenceName" required="required" />
+				        	<span class="warning" ng-show="ferenceForm_edit.conferenceName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="conferenceDescribe">描述</label>
+				        	<input type="text" name="conferenceDescribe" id="conferenceDescribe" ng-model="edit_ferenceInfo.conferenceDescribe" required="required" />
+				        	<span class="warning" ng-show="ferenceForm_edit.conferenceDescribe.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="openTime_edit">开放时间</label>
+				        	<input type="text" name="openTime" id="openTime_edit" placeholder=" - " ng-model="edit_ferenceInfo.openTime">
+				        	<span class="warning">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceSite">位置</label>
+				        	<input type="text" name="location" id="location" ng-model="edit_ferenceInfo.location" required="required" />
+				        	<span class="warning" ng-show="ferenceForm_edit.location.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="conferenceState_edit">状态</label>
+				        	<select id="conferenceState_edit" name="conferenceState">
+	                            <option value="0">不可使用</option>
+	                            <option value="1">需要审核</option>
+	                            <option value="2">会员无需审核</option>
+	                            <option value="3">对外开放</option>
+	                       </select>
+			        	</p>
+			        	<p style="display: none;">
+			        		<input type="text" name="conferenceType" value="1" />
+			        	</p>
+			        	<p>
+			        		<label for="conferencePrice">价格</label>
+				        	<input type="number" name="conferencePrice" id="conferencePrice" ng-model="edit_ferenceInfo.conferencePrice" required="required" />
+				        	<span class="warning" ng-show="ferenceForm_edit.conferencePrice.$error.required">*</span>
+				        	<span class="warning" ng-show="ferenceForm_edit.conferencePrice.$error.number">只能输入数字</span>
+			        	</p>
+			        	<p>
+			        		<label for="upfile">图片</label>
+			        		<span class="warning" style="margin-left: 30px;">按住ctrl可多选，最多可以上传4张图片。</span>
+			        		<input type="file" name="file" id="ment_editference" accept="image/*" class="putImg" multiple>
+			        		<span class="imgBox">
+			        			<img id="imageview4" class="showImg">
+			        			<img id="imageview5" class="showImg">
+			        			<img id="imageview6" class="showImg">
+			        			<img id="imageview7" class="showImg">
+			        		</span>
+			            </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="ferenceForm_edit.$invalid" ng-click="edit_ference_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+

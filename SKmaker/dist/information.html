@@ -1,0 +1,44 @@
+<div class="information">
+	<div class="clearfix">
+		<button class="layui-btn addSpace" id="add_information">
+		    <i class="layui-icon">&#xe608;</i> 添加资讯
+		</button>
+	</div>
+<!--资讯列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>资讯标题</th>
+			      <th>资讯描述</th>
+			      <th>发布作者</th>
+			      <th>资讯封面图</th>
+			      <th>正文内容</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="information in informationInfo">
+			      <td>{{information.title}}</td>
+			      <td>{{information.messageInfo}}</td>
+			      <td>{{information.writer}}</td>
+			      <td><img src="{{information.pictureSite}}" alt="....." style="width: 50px;height: 50px;" /></td>
+			      <td><button class="layui-btn" id="add_information" ng-click="query_informationInfo($index,informationInfo)">查看详情</button></td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" ng-click="edit_information($index,informationInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_information($index,informationInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_information"></div>
+	</div>
+</div>
+
+

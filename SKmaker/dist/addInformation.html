@@ -1,0 +1,39 @@
+<div class="add_information">
+	<form name="informationForm" novalidate method="post" enctype="multipart/form-data" id="add_informationform">
+		<p>
+			<label for="title">资讯标题</label>
+	    	<input type="text" name="title" id="title" ng-model="title" required="required" />
+	    	<span class="warning" ng-show="informationForm.title.$error.required">*</span>
+		</p>
+		<p>
+			<label for="messageInfo">资讯描述</label>
+			<textarea type="text" name="messageInfo" id="messageInfo" ng-model="messageInfo" required="required" style="width: 60%;height: 80px;"></textarea>
+	    	<span class="warning" ng-show="informationForm.messageInfo.$error.required">*</span>
+		</p>
+		<p>
+			<label for="writer">发布作者</label>
+			<input type="text" name="writer" id="writer" ng-model="writer" required="required" />
+	    	<span class="warning" ng-show="informationForm.writer.$error.required">*</span>
+		</p>
+		<p>
+    		<label for="upfile">资讯封面图</label>
+    		<span class="warning" style="margin-left: 30px;">只能上传一张图片</span>
+    		<input type="file" name="file" id="ment_addinformation" accept="image/*" class="putImg">
+    		<span class="imgBox">
+    			<img id="imageview" class="showImg">
+    		</span>
+        </p>
+        <label for="editor_information">正文内容编辑：</label>
+	    <script id="editor_information" name="editor_information" type="text/plain" style="width: 100%;height: 500px;">
+	    	这里写你的初始化内容
+	    </script>
+	</form>
+	<div class="modal-footer">
+        <button type="button" class="btn btn-default" id="cancel_information">取消</button>
+        <button type="button" class="btn btn-primary" ng-disabled="informationForm.$invalid" ng-click="addInformation()">确定</button>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
+

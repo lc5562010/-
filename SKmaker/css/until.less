@@ -1,0 +1,479 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body {
+    min-width: 1200px;
+    background: #2d2c41;
+    font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
+}
+.clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.warning {
+    color: #f00;
+}
+.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1035;
+    background: #23262e;
+}
+.view {
+    min-width: 1000px;
+    padding: 15px;
+    position: absolute;
+    left: 200px;
+    right: 0;
+    top: 60px;
+    width: auto;
+    overflow: hidden;
+    overflow-y: auto;
+}
+//空间
+.space label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.space input,.space select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.addSpace {
+    float: right;
+}
+.space p {
+    margin: 20px auto;
+}
+.space_list {
+    width: 98%;
+    background: #fff;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 2px 2px 3px #666;
+    .space_listLeft {
+        width: 30%;
+        height: 312px;
+        float: left;
+        position: relative;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        span {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 20px;
+            background-color: #e6a707;
+            text-align: center;
+            color: #f0f0f0;
+        }
+    }
+    .space_listRight {
+        width: 65%;
+        float: left;
+        margin: 0 15px;
+        p {
+            margin: 20px auto;
+        }
+    }
+}
+
+#show_img{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2222;
+    span {
+        display:table-cell;
+        vertical-align:middle;
+        z-index: 2222;
+    }
+    .left_btn {
+        width: 70px;
+        height: 70px;
+        background-color: #fff;
+        background:url(../img/3cee.png) no-repeat center left;
+        background-size: cover;
+        position: absolute;
+        left: 10%;
+        top: 50%;
+        margin-top: -35px;
+        z-index: 2224;
+        cursor: pointer;
+    }
+    .right_btn {
+        width: 70px;
+        height: 70px;
+        background-color: #fff;
+        background:url(../img/3cee.png) no-repeat center right;
+        background-size: cover;
+        position: absolute;
+        right: 10%;
+        top: 50%;
+        margin-top: -35px;
+        z-index: 2224;
+        cursor: pointer;
+    }
+}
+
+
+//会议室
+.ference label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.ference input,.ference select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.ference {
+    p {
+        margin: 20px auto;
+    }
+}
+//会员
+.member label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.member input,.member select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.member {
+    p {
+        margin: 20px auto;
+    }
+}
+//工位
+.station label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.station input,.station select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.station {
+    p {
+        margin: 20px auto;
+    }
+    .left-wrapper {
+        float: left;
+        width: 200px;
+        li {
+            cursor: pointer;
+            span {
+                color: #fff;
+            }
+        }
+    }
+    .stationList {
+        margin-top: 20px;
+        margin-left: 200px;
+        .stationBox {
+            display: inline-block;
+            margin-left: 20px;
+            margin-bottom: 15px;
+            width: 100px;
+            height: 100px;
+            border: solid 1px #fff;
+            span {
+                color: #fff;
+                cursor: pointer;
+                display: block;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+            }
+        }
+    }
+}
+//企业
+.enterprise label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.enterprise input,.enterprise select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.enterprise {
+    p {
+        margin: 20px auto;
+    }
+}
+//活动
+.activity label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.activity input,.activity select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.activity {
+    p {
+        margin: 20px auto;
+    }
+    td {
+        max-width: 100px;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+    }
+}
+//添加活动
+.add_activity label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    color: #fff;
+}
+.add_activity input,.add_activity select,.add_activity textarea {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.add_activity {
+    p {
+        margin: 20px auto;
+    }
+}
+//资讯
+.information label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.information input,.information select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.information {
+    p {
+        margin: 20px auto;
+    }
+    td {
+        max-width: 100px;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+    }
+}
+//添加资讯
+.add_information label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    color: #fff;
+}
+.add_information input,.add_information select,.add_information textarea {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.add_information {
+    p {
+        margin: 20px auto;
+    }
+}
+//部门
+.department label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.department input,.department select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+//.ztree li span.button.ico_docu{  
+//  margin-right:2px;  
+//  background:url(link/img/diy/2.png) no-repeat scroll 0 0 transparent;  
+//  vertical-align:top;  
+//  background-position: -45px -117px;   
+//  vertical-align:top;  
+//  *vertical-align:middle
+//}  
+.department {
+    p {
+        margin: 20px auto;
+    }
+    .left-wrapper {
+        float: left;
+        width: 200px;
+        li {
+            cursor: pointer;
+            span {
+                color: #fff;
+            }
+        }
+    }
+    .departmentList {
+        float: left;
+        width: 100%;
+        table {
+            margin-top: 20px;
+            color: #fff;
+        }
+    } 
+}
+//社交
+.social {
+    overflow: hidden;
+    .comment-show-con {
+        width: 100%;
+        border-top: 1px solid #EDEDED;
+        padding: 10px 0;
+        .comment-show-con-img {
+            width: 48px;
+            height: 48px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .pull-left {
+            float: left !important;
+        }
+        .comment-show-con-list {
+            width: 85%;
+            margin-left: 3%;
+            .pl-text {
+                width: 100%;
+                margin-top: 7px;
+                word-wrap: break-word;
+                overflow: hidden;
+                .comment-size-name {
+                    font-size: 12px;
+                    color: #339b53;
+                }
+                a {
+                    text-decoration: none;
+                }
+            }
+            .date-dz {
+                width: 100%;
+                float: left;
+                .comment-time, .comment-pl-block {
+                    padding-top: 7px;
+                }
+                .date-dz-left {
+                    font-size: 12px;
+                    color: #8b8b8b;
+                    display: block;
+                    padding-top: 18px;
+                }
+            }
+            .frendInfo {
+                margin: 10px auto;
+            }
+            .hf-list-con {
+                float: left;
+                width: 100%;
+                background-color: #eaeaec;
+                margin-top: 7px;
+                .all-pl-con {
+                    width: 96%;
+                    padding: 3px 0;
+                    float: left;
+                    margin: 0 2%;
+                    padding-bottom: 12px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,230 @@
+<div class="space">
+	<div class="clearfix">
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_space" id="addSpace">
+		    <i class="layui-icon">&#xe608;</i> 添加空间
+		</button>
+	</div>
+<!--所有空间列表-->
+	<div class="space_list clearfix" ng-repeat="space in spaceInfo">
+		<div class="space_listLeft">
+			<span ng-bind="space.spacePicture.length"></span>
+			<img alt="..." ng-src="{{space.spacePicture[0]}}" ng-click="show_img(space.spacePicture)">
+		</div>
+		<div class="space_listRight">
+			<p>
+				<span ng-bind="space.spaceName" style="font-weight: bold;font-size: 20px;"></span>
+				<span ng-bind="space.spaceState" style="margin-left: 20px;"></span>
+				<span ng-bind="space.city" style="float: right;font-weight: bold;font-size: 20px;"></span>
+			</p>
+			<p>
+				<span style="font-weight: bold;">创建时间：</span>
+				<span ng-bind="space.creationTime"></span>
+			</p>
+			<p>
+				<span style="font-weight: bold;">空间简介：</span>
+				<span ng-bind="space.spaceDescribe"></span>
+			</p>
+			<p>
+				<span style="font-weight: bold;">详细地址：</span>
+				<span ng-bind="space.spaceSite"></span>
+			</p>
+			<p>
+				<span style="font-weight: bold;">固定电话：</span>
+				<span ng-bind="space.fixPhone"></span>
+			</p>
+			<p>
+				<span style="font-weight: bold;">经理姓名：</span>
+				<span ng-bind="space.relationName"></span>
+				<span style="font-weight: bold;margin-left: 50px;">经理电话：</span>
+				<span ng-bind="space.relationTel"></span>
+			</p>
+			<p>
+				<span style="font-weight: bold;">线上工位价格：</span>
+				<span ng-bind="space.onlineLocationPrice"></span>
+			</p>
+			<p style="text-align: right;">
+				<button class="layui-btn layui-btn-normal" data-toggle="modal" data-target="#myModal_space_edit" ng-click="edit_space($index,spaceInfo)">修改</button>
+				<button class="layui-btn layui-btn-danger" ng-click="del_space($index,spaceInfo)">删除</button>
+			</p>
+		</div>
+	</div>
+	<div id="test_space" style="margin-left: 20px;"></div>
+	<!--大图展示-->
+	<div id="show_img">
+	    <span class="left_btn"></span>
+	    <span><img src="" style="max-height: 60%;max-width: 60%;z-index: 2222"></span>
+	    <span class="right_btn"></span>
+	</div>
+<!--添加空间弹出框-->
+	<div class="modal fade" id="myModal_space" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加空间</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="spaceForm" novalidate method="post" enctype="multipart/form-data" id="add_spaceform">
+			        	<p>
+			        		<label for="spaceName">空间名称</label>
+				        	<input type="text" name="spaceName" id="spaceName" ng-model="spaceName" required="required" />
+				        	<span class="warning" ng-show="spaceForm.spaceName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceDescribe">空间简介</label>
+				        	<input type="text" name="spaceDescribe" id="spaceDescribe" ng-model="spaceDescribe" required="required" ng-maxlength="50" />
+				        	<span class="warning" ng-show="spaceForm.spaceDescribe.$error.required">*</span>
+			            	<span class="warning" ng-show="spaceForm.spaceDescribe.$error.maxlength">最多50字</span>
+			        	</p>
+			        	<p>
+			        		<label for="city">所在城市</label>
+				        	<input type="text" name="city" id="city" ng-model="city" required="required" />
+				        	<span class="warning" ng-show="spaceForm.city.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceSite">详细地址</label>
+				        	<input type="text" name="spaceSite" id="spaceSite" ng-model="spaceSite" required="required" placeholder="详细到门牌号码" />
+				        	<span class="warning" ng-show="spaceForm.spaceSite.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="fixPhone">固定电话</label>
+				        	<input type="text" name="fixPhone" id="fixPhone" ng-model="fixPhone" ng-pattern="/^(0[0-9]{2,3}\-)([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/" />
+				        	<span class="warning" ng-show="spaceForm.fixPhone.$error.pattern">请输入正确电话</span>
+			        	</p>
+			        	<p>
+			        		<label for="relationName">经理姓名</label>
+				        	<input type="text" name="relationName" id="relationName" ng-model="relationName" required="required" />
+				        	<span class="warning" ng-show="spaceForm.relationName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="relationTel">经理电话</label>
+				        	<input type="number" name="relationTel" id="relationTel" ng-model="relationTel" required="required" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" />
+				        	<span class="warning" ng-show="spaceForm.relationTel.$error.required">*</span>
+				        	<span class="warning" ng-show="spaceForm.relationTel.$error.number">只能输入数字</span>
+			            	<span class="warning" ng-show="spaceForm.relationTel.$error.pattern">请输入正确手机号</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceState">空间状态</label>
+				        	<select id="spaceState" name="spaceState">
+	                            <option value="0">运营中</option>
+	                            <option value="1">未运营</option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="date_space">创建时间</label>
+				        	<input type="text" name="date_space" id="date_space" required="required" placeholder="点击选择时间" />
+				        	<span class="warning">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="onlineLocationPrice">线上工位价格</label>
+				        	<input type="number" name="onlineLocationPrice" id="onlineLocationPrice" ng-model="onlineLocationPrice" required="required" />
+				        	<span class="warning" ng-show="spaceForm.onlineLocationPrice.$error.required">*</span>
+				        	<span class="warning" ng-show="spaceForm.onlineLocationPrice.$error.number">只能输入数字</span>
+			        	</p>
+			        	<p>
+			        		<label for="upfile">空间图片</label>
+			        		<span class="warning" style="margin-left: 30px;">按住ctrl可多选，最多可以上传4张图片。</span>
+			        		<input type="file" name="file" id="ment" accept="image/*" class="putImg" multiple>
+			        		<span class="imgBox">
+			        			<img id="imageview" class="showImg">
+			        			<img id="imageview1" class="showImg">
+			        			<img id="imageview2" class="showImg">
+			        			<img id="imageview3" class="showImg">
+			        		</span>
+			            </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="spaceForm.$invalid" ng-click="addSpace()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改空间弹出框-->
+	<div class="modal fade" id="myModal_space_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改空间</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="spaceForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_spaceform">
+			        	<p>
+			        		<label for="spaceName">空间名称</label>
+				        	<input type="text" name="spaceName" id="spaceName" ng-model="edit_spaceInfo.spaceName" required="required" />
+				        	<span class="warning" ng-show="spaceForm_edit.spaceName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceDescribe">空间简介</label>
+				        	<input type="text" name="spaceDescribe" id="spaceDescribe" ng-model="edit_spaceInfo.spaceDescribe" required="required" ng-maxlength="50" />
+				        	<span class="warning" ng-show="spaceForm_edit.spaceDescribe.$error.required">*</span>
+			            	<span class="warning" ng-show="spaceForm_edit.spaceDescribe.$error.maxlength">最多50字</span>
+			        	</p>
+			        	<p>
+			        		<label for="city">所在城市</label>
+				        	<input type="text" name="city" id="city" ng-model="edit_spaceInfo.city" required="required" />
+				        	<span class="warning" ng-show="spaceForm_edit.city.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceSite">详细地址</label>
+				        	<input type="text" name="spaceSite" id="spaceSite" ng-model="edit_spaceInfo.spaceSite" required="required" placeholder="详细到门牌号码" />
+				        	<span class="warning" ng-show="spaceForm_edit.spaceSite.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="fixPhone">固定电话</label>
+				        	<input type="text" name="fixPhone" id="fixPhone" ng-model="edit_spaceInfo.fixPhone" ng-pattern="/^(0[0-9]{2,3}\-)([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/" />
+				        	<span class="warning" ng-show="spaceForm_edit.fixPhone.$error.pattern">请输入正确电话</span>
+			        	</p>
+			        	<p>
+			        		<label for="relationName">经理姓名</label>
+				        	<input type="text" name="relationName" id="relationName" ng-model="edit_spaceInfo.relationName" required="required" />
+				        	<span class="warning" ng-show="spaceForm_edit.relationName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="relationTel">经理电话</label>
+				        	<input type="text" name="relationTel" id="relationTel" ng-model="edit_spaceInfo.relationTel" required="required" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" />
+				        	<span class="warning" ng-show="spaceForm_edit.relationTel.$error.required">*</span>
+				        	<span class="warning" ng-show="spaceForm_edit.relationTel.$error.number">只能输入数字</span>
+			            	<span class="warning" ng-show="spaceForm_edit.relationTel.$error.pattern">请输入正确手机号</span>
+			        	</p>
+			        	<p>
+			        		<label for="spaceState">空间状态</label>
+				        	<select id="spaceState_edit" name="spaceState">
+	                            <option value="0">运营中</option>
+	                            <option value="1">未运营</option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="date_space_edit">创建时间</label>
+				        	<input type="text" name="date_space_edit" id="date_space_edit" required="required" placeholder="点击选择时间" ng-model="creationTime_edit" />
+				        	<span class="warning">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="onlineLocationPrice">线上工位价格</label>
+				        	<input type="number" name="onlineLocationPrice" id="onlineLocationPrice" ng-model="edit_spaceInfo.onlineLocationPrice" required="required" />
+				        	<span class="warning" ng-show="spaceForm_edit.onlineLocationPrice.$error.required">*</span>
+				        	<span class="warning" ng-show="spaceForm_edit.onlineLocationPrice.$error.number">只能输入数字</span>
+			        	</p>
+			        	<p>
+			        		<label for="upfile">空间图片</label>
+			        		<span class="warning" style="margin-left: 30px;">按住ctrl可多选，最多可以上传4张图片。</span>
+			        		<input type="file" name="file" id="ment_editspace" accept="image/*" class="putImg" multiple>
+			        		<span class="imgBox">
+			        			<img id="imageview4" class="showImg">
+			        			<img id="imageview5" class="showImg">
+			        			<img id="imageview6" class="showImg">
+			        			<img id="imageview7" class="showImg">
+			        		</span>
+			            </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="spaceForm_edit.$invalid" ng-click="edit_space_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>

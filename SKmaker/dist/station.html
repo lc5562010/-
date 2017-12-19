@@ -1,0 +1,433 @@
+<div class="station">
+	<div>
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_station" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_station">
+		    <i class="layui-icon">&#xe608;</i> 添加工位
+		</button>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_partition" style="margin-right: 20px;">
+		    <i class="layui-icon">&#xe608;</i> 添加分区
+		</button>
+	</div>
+<!--分区列表-->
+	<div class="clearfix" style="position: relative;">
+		<div class="left-wrapper">
+			<div style="margin-top: 20px;width: 200px;" class="layui-side-scroll">
+				<ul class="layui-nav layui-nav-tree layui-bg-cyan layui-inline" lay-filter="demo">
+					<li class="layui-nav-item" ng-click="query_allstation()">
+						<a>全部</a>
+					</li>
+					<li class="layui-nav-item" ng-repeat="info in partitiononeInfo">
+						<a id="{{info.subareaId}}" ng-click="query_partitiontwo($index,partitiononeInfo)">
+							<span ng-bind="info.subareaName"></span>
+							<span style="display: inline-block;" ng-click="edit_partition($index,partitiononeInfo);$event.stopPropagation();">
+							    <i class="layui-icon">&#xe642;</i>
+							</span>
+							<span style="display: inline-block;" ng-click="del_partition($index,partitiononeInfo);$event.stopPropagation();">
+							    <i class="layui-icon">&#xe640;</i>
+							</span>
+							<span style="display: inline-block;" ng-click="batch_station_one($index,partitiononeInfo);$event.stopPropagation();">
+							    <i class="layui-icon">&#xe620;</i>
+							</span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd ng-repeat="info_small in partitiontwoInfo" ng-click="query_partitiontwostation($index,partitiontwoInfo)">
+								<a id="{{info_small.subareaId}}">
+									<span ng-bind="info_small.subareaName"></span>
+									<span style="display: inline-block;" ng-click="edit_partition($index,partitiontwoInfo);$event.stopPropagation();">
+									    <i class="layui-icon">&#xe642;</i>
+									</span>
+									<span style="display: inline-block;" ng-click="del_partition($index,partitiontwoInfo);$event.stopPropagation();">
+									    <i class="layui-icon">&#xe640;</i>
+									</span>
+									<span style="display: inline-block;" ng-click="batch_station_two($index,partitiontwoInfo);$event.stopPropagation();">
+									    <i class="layui-icon">&#xe620;</i>
+									</span>
+								</a>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+	<!--工位列表-->	
+		<div class="stationList">
+			<span ng-repeat="satation in stationInfo" class="stationBox" data-toggle="modal" data-target="#myModal_station_edit" ng-click="edit_station($index,stationInfo)">
+				<span ng-bind="satation.location"></span>
+				<span ng-bind="satation.stationState"></span>
+			</span>
+			<div id="test_station" style="margin-left: 20px;"></div>
+		</div>
+	</div>
+<!--添加分区弹出框-->
+	<div class="modal fade" id="myModal_partition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加分区</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="partitionForm" novalidate method="post" enctype="multipart/form-data" id="add_partitionform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId">
+	                            <option ng-repeat="info in spaceInfo" value={{info.spaceId}} ng-bind="info.spaceName" ng-selected="number==info.spaceId"></option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="subareaName">分区名称</label>
+				        	<input type="text" name="subareaName" id="subareaName" ng-model="subareaName" required="required" />
+				        	<span class="warning" ng-show="partitionForm.subareaName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="areaArea">分区面积</label>
+				        	<input type="text" name="areaArea" id="areaArea" ng-model="areaArea" />
+			        	</p>
+			        	<p>
+			        		<label for="stationArea">工位面积</label>
+				        	<input type="text" name="stationArea" id="stationArea" ng-model="stationArea" />
+			        	</p>
+			        	<p>
+			        		<label for="subareaGrade">分区级别</label>
+			        		<select name="subareaGrade" id="subareaGrade" required="required" ng-model="subareaGrade">
+			        			<option value="">请选择分区级别</option>
+			        			<option value="1">一级分区</option>
+			        			<option value="2">二级分区</option>
+			        		</select>
+			        		<span class="warning" ng-show="partitionForm.subareaGrade.$error.required">*</span>
+			        	</p>
+			        	<p style="display: none;" id="superiorSubareaId_sel">
+			        		<label for="superiorSubareaId">上级分区</label>
+			        		<select name="superiorSubareaId" id="superiorSubareaId">
+			        			<option value="">请选择上级分区</option>
+			        			<option ng-repeat="info in partitiononeInfo" value={{info.subareaId}} ng-bind="info.subareaName"></option>
+			        		</select>
+			        	</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="partitionForm.$invalid" ng-click="addPartition()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改分区弹出框-->
+	<div class="modal fade" id="myModal_partition_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改分区</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="partitionForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_partitionform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_editpartition">
+	                            <option ng-repeat="info in spaceInfo" value={{info.spaceId}} ng-bind="info.spaceName" ng-selected="number==info.spaceId"></option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="subareaName">分区名称</label>
+				        	<input type="text" name="subareaName" id="subareaName" ng-model="edit_partitionInfo.subareaName" required="required" />
+				        	<span class="warning" ng-show="partitionForm_edit.subareaName.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="areaArea">分区面积</label>
+				        	<input type="text" name="areaArea" id="areaArea" ng-model="edit_partitionInfo.areaArea" />
+			        	</p>
+			        	<p>
+			        		<label for="stationArea">工位面积</label>
+				        	<input type="text" name="stationArea" id="stationArea" ng-model="edit_partitionInfo.stationArea" />
+			        	</p>
+			        	<!--<p>
+			        		<label for="subareaGrade_edit">分区级别</label>
+			        		<select name="subareaGrade" id="subareaGrade_edit" required="required" disabled="disabled">
+			        			<option value="">请选择分区级别</option>
+			        			<option value="1">一级分区</option>
+			        			<option value="2">二级分区</option>
+			        		</select>
+			        		<span class="warning">*</span>
+			        	</p>
+			        	<p style="display: none;" id="superiorSubareaId_sel">
+			        		<label for="superiorSubareaId">上级分区</label>
+			        		<select name="superiorSubareaId" id="superiorSubareaId">
+			        			<option value="">请选择上级分区</option>
+			        			<option ng-repeat="info in partitiononeInfo" value={{info.subareaId}} ng-bind="info.subareaName"></option>
+			        		</select>
+			        	</p>-->
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="partitionForm_edit.$invalid" ng-click="edit_partition_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--添加工位弹出框-->
+	<div class="modal fade" id="myModal_station" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加工位</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="stationForm" novalidate method="post" enctype="multipart/form-data" id="add_stationform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId">
+	                            <option ng-repeat="info in spaceInfo" value={{info.spaceId}} ng-bind="info.spaceName" ng-selected="number==info.spaceId" disabled="disabled"></option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="oneSubareaId">一级分区</label>
+			        		<select name="oneSubareaId" id="oneSubareaId" required="required" ng-model="oneSubareaId">
+			        			<option value="">请选择一级分区</option>
+			        			<option ng-repeat="info in partitiononeInfo" value={{info.subareaId}} ng-bind="info.subareaName" id="{{info.superiorSubareaId}}"></option>
+			        		</select>
+			        		<span class="warning" ng-show="stationForm.oneSubareaId.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="twoSubareaId">二级分区</label>
+			        		<select name="twoSubareaId" id="twoSubareaId">
+			        			<option value="">请选择二级分区</option>
+			        			<option ng-repeat="info in partitiontwo_twoInfo" value={{info.subareaId}} ng-bind="info.subareaName"></option>
+			        		</select>
+			        	</p>
+			        	<p>
+			        		<label for="initialValue">开始编号</label>
+				        	<input type="text" name="initialValue" id="initialValue" required="required" ng-model="initialValue" />
+				        	<span class="warning" ng-show="stationForm.initialValue.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="num">添加数量</label>
+				        	<input type="text" name="num" id="num" required="required" ng-model="num" />
+				        	<span class="warning" ng-show="stationForm.num.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="stationPrice">工位价格</label>
+				        	<input type="text" name="stationPrice" id="stationPrice" required="required" ng-model="stationPrice" />
+				        	<span class="warning" ng-show="stationForm.stationPrice.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="facility">配套设施</label>
+				        	<input type="text" name="facility" id="facility" required="required" ng-model="facility" />
+				        	<span class="warning" ng-show="stationForm.facility.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="stationArea">工位面积</label>
+				        	<input type="text" name="stationArea" id="stationArea" ng-model="stationArea" />
+			        	</p>
+			        	<p>
+			        		<label for="stationState">工位状态</label>
+				        	<select id="stationState" name="stationState" required="required" ng-model="stationState">
+				        		<option value="">请选择工位状态</option>
+	                            <option value="0">未使用</option>
+	                            <option value="1">已租用</option>
+	                            <option value="2">维修中</option>
+	                        </select>
+	                        <span class="warning" ng-show="stationForm.stationState.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="stationType">工位类型</label>
+				        	<select id="stationType" name="stationType" required="required" ng-model="stationType">
+				        		<option value="">请选择工位类型</option>
+	                            <option value="独立工位">独立工位</option>
+	                            <option value="办公室">办公室</option>
+	                            <option value="面积">面积</option>
+	                        </select>
+	                        <span class="warning" ng-show="stationForm.stationType.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="onlineBooking">是否线上预定</label>
+				        	<select id="onlineBooking" name="onlineBooking" required="required" ng-model="onlineBooking">
+				        		<option value="">请选择是否线上预定</option>
+	                            <option value="1">是</option>
+                            	<option value="0">否</option>
+	                        </select>
+	                        <span class="warning" ng-show="stationForm.onlineBooking.$error.required">*</span>
+			        	</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="stationForm.$invalid" ng-click="addStation()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--批量修改工位弹出框-->
+	<div class="modal fade" id="myModal_stationbatch_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改工位</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="edit_stationform_batch" novalidate method="post" enctype="multipart/form-data" id="edit_stationform_batch">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId">
+	                            <option ng-repeat="info in spaceInfo" value={{info.spaceId}} ng-bind="info.spaceName" ng-selected="number==info.spaceId" disabled="disabled"></option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="oneSubareaId_batch">一级分区</label>
+			        		<select name="oneSubareaId" id="oneSubareaId_batch" required="required">
+			        			<option value="">请选择一级分区</option>
+			        			<option ng-repeat="info in partitiononeInfo" value={{info.subareaId}} ng-bind="info.subareaName" id="{{info.superiorSubareaId}}"></option>
+			        		</select>
+			        	</p>
+			        	<p>
+			        		<label for="twoSubareaId">二级分区</label>
+			        		<select name="twoSubareaId" id="twoSubareaId">
+			        			<option value="">请选择二级分区</option>
+			        			<option value="0">移出二级分区</option>
+			        			<option ng-repeat="info in partitiontwo_twoInfo" value={{info.subareaId}} ng-bind="info.subareaName"></option>
+			        		</select>
+			        	</p>
+			        	<p>
+			        		<label for="stationPrice">工位价格</label>
+				        	<input type="text" name="stationPrice" id="stationPrice" />
+			        	</p>
+			        	<p>
+			        		<label for="facility">配套设施</label>
+				        	<input type="text" name="facility" id="facility" />
+			        	</p>
+			        	<p>
+			        		<label for="stationArea">工位面积</label>
+				        	<input type="text" name="stationArea" />
+			        	</p>
+			        	<p>
+			        		<label for="stationState">工位状态</label>
+				        	<select id="stationState" name="stationState">
+				        		<option value="">请选择工位状态</option>
+	                            <option value="0">未使用</option>
+	                            <option value="1">已租用</option>
+	                            <option value="2">维修中</option>
+	                        </select>
+			        	</p>
+			        	<p>
+			        		<label for="stationType">工位类型</label>
+				        	<select id="stationType" name="stationType">
+				        		<option value="">请选择工位类型</option>
+	                            <option value="独立工位">独立工位</option>
+	                            <option value="办公室">办公室</option>
+	                            <option value="面积">面积</option>
+	                        </select>
+			        	</p>
+			        	<p>
+			        		<label for="onlineBooking">是否线上预定</label>
+				        	<select id="onlineBooking" name="onlineBooking">
+				        		<option value="">请选择是否线上预定</option>
+	                            <option value="1">是</option>
+                            	<option value="0">否</option>
+	                        </select>
+			        	</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel_batch()">取消</button>
+	                <button type="button" class="btn btn-primary" ng-click="batch_station_one_sub()" id="batch_one" style="display: none;">确定</button>
+	                <button type="button" class="btn btn-primary" ng-click="batch_station_two_sub()" id="batch_two" style="display: none;">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改工位弹出框-->
+	<div class="modal fade" id="myModal_station_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改工位</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="stationForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_stationform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_editstation">
+	                            <option ng-repeat="info in spaceInfo" value={{info.spaceId}} ng-bind="info.spaceName" ng-selected="number==info.spaceId"></option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="oneSubareaId_edit">一级分区</label>
+			        		<select name="oneSubareaId" id="oneSubareaId_edit">
+			        			<option ng-repeat="info in partitiononeInfo" value={{info.subareaId}} ng-bind="info.subareaName" id="{{info.superiorSubareaId}}"></option>
+			        		</select>
+			        	</p>
+			        	<p>
+			        		<label for="twoSubareaId_edit">二级分区</label>
+			        		<select name="twoSubareaId" id="twoSubareaId_edit">
+			        			<option value="0">请选择二级分区</option>
+			        			<option ng-repeat="info in partitiontwo_twoInfo" value={{info.subareaId}} ng-bind="info.subareaName"></option>
+			        		</select>
+			        	</p>
+			        	<p>
+			        		<label for="stationPrice">工位价格</label>
+				        	<input type="text" name="stationPrice" id="stationPrice" required="required" ng-model="edit_stationInfo.stationPrice" />
+				        	<span class="warning" ng-show="stationForm_edit.stationPrice.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="facility">配套设施</label>
+				        	<input type="text" name="facility" id="facility" required="required" ng-model="edit_stationInfo.facility" />
+				        	<span class="warning" ng-show="stationForm_edit.facility.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="stationArea">工位面积</label>
+				        	<input type="text" name="stationArea" id="stationArea" ng-model="edit_stationInfo.stationArea" />
+			        	</p>
+			        	<p>
+			        		<label for="stationState_edit">工位状态</label>
+				        	<select id="stationState_edit" name="stationState">
+	                            <option value="0">未使用</option>
+	                            <option value="1">已租用</option>
+	                            <option value="2">维修中</option>
+	                       </select>
+			        	</p>
+			        	<p>
+			        		<label for="stationType_edit">工位类型</label>
+				        	<select id="stationType_edit" name="stationType">
+	                            <option value="独立工位">独立工位</option>
+	                            <option value="办公室">办公室</option>
+	                            <option value="面积">面积</option>
+	                        </select>
+			        	</p>
+			        	<p>
+			        		<label for="onlineBooking_edit">是否线上预定</label>
+				        	<select id="onlineBooking_edit" name="onlineBooking">
+	                            <option value="1">是</option>
+                            	<option value="0">否</option>
+	                       </select>
+			        	</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">取消</button>
+	                <button type="button" class="btn btn-danger" ng-click="del_station()">删除</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="stationForm_edit.$invalid" ng-click="edit_station_sub()">修改</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<script>
+	setTimeout(function() {
+		//JavaScript代码区域
+		layui.use('element', function(){
+		  var element = layui.element;
+		  element.init()
+		});
+	},1000);
+	
+</script>
+
+
+

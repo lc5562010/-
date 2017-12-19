@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	
+<head>
+    <meta charset="UTF-8">
+    <title>尚科后台管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/link/bootstrap.min.css" media="screen" type="text/css" />
+	<link rel="stylesheet" href="layui/css/layui.css" media="screen" type="text/css" />
+	<link rel="stylesheet" href="css/link/jedate.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="css/until.css" media="screen" type="text/css" />
+    <!--<link rel="stylesheet" href="css/header.css" media="screen" type="text/css" />-->
+</head>
+<style>
+	.imgBox {
+		margin-top: 20px;
+		margin-left: 20px;
+		display: block;
+		height: 100px;
+	}
+	.putImg {
+		
+	}
+	.showImg {
+		display: inline-block;
+		width: 100px;
+		height: 100px;
+		margin-left: 10px;
+	}
+    
+    
+    .station {
+    	color: #333;
+    }
+    .station .addStation {
+    	margin-top: 20px;
+    	float: right;
+    }
+    .station p {
+    	margin: 20px 0;
+    }
+    .station span{
+        color: red;
+    }
+    .station label {
+    	display: inline-block;
+    	width: 100px;
+    	height: 30px;
+    	line-height: 30px;
+    	text-align: right;
+    }
+    .station input,.station select {
+    	margin-left: 30px;
+    	width: 200px;
+    	height: 30px;
+    	line-height: 30px;
+        padding: 5px;
+        padding-left: 10px;
+        border-radius: 3px; /*css3属性IE不支持*/
+    }
+</style>
+<body>
+	<div class="layui-layout layui-layout-admin">
+		<div class="header">
+			<span class="title layui-logo">尚科社区后台管理系统</span>
+		</div>
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree" lay-filter="test">
+					<li class="layui-nav-item layui-nav-itemed">
+						<a class="" href="javascript:;">运营管理</a>
+						<dl class="layui-nav-child">
+							<dd id="space_login" style="display: none;">
+								<a href="#/space">空间信息管理</a>
+							</dd>
+							<dd id="station_login" style="display: none;">
+								<a href="#/station">工位管理</a>
+							</dd>
+							<dd id="ference_login" style="display: none;">
+								<a href="#/ference">会议室管理</a>
+							</dd>
+							<dd id="site_login" style="display: none;">
+								<a href="#/site">场地管理</a>
+							</dd>
+							<dd id="activity_login" style="display: none;">
+								<a href="#/activity">活动管理</a>
+							</dd>
+							<dd id="information_login" style="display: none;">
+								<a href="#/information">资讯管理</a>
+							</dd>
+							<dd id="social_login" style="display: none;">
+								<a href="#/social">社交管理</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">系统管理</a>
+						<dl class="layui-nav-child">
+							<dd id="department_login" style="display: none;">
+								<a href="#/department">员工管理</a>
+							</dd>
+							<dd id="complaint_login" style="display: none;">
+								<a href="#/complaint">投诉建议</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="">会员管理</a>
+						<dl class="layui-nav-child">
+							<dd id="enterprise_login" style="display: none;">
+								<a href="#/enterprise">企业管理</a>
+							</dd>
+							<dd id="member_login" style="display: none;">
+								<a href="#/member">会员管理</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="">CRM管理</a>
+						<dl class="layui-nav-child">
+							<dd id="marketing_login" style="display: none;">
+								<a href="#/marketing">销控管理</a>
+							</dd>
+							<dd id="visitor_login" style="display: none;">
+								<a href="#/visitor">访客管理</a>
+							</dd>
+							<dd id="activeuser_login" style="display: none;">
+								<a href="#/activeuser">活动用户信息</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="">合同财务管理</a>
+						<dl class="layui-nav-child">
+							<dd id="contract_login" style="display: none;">
+								<a href="#/contract">合同管理</a>
+							</dd>
+							<dd id="bill_login" style="display: none;">
+								<a href="#/bill">账单管理</a>
+							</dd>
+							<dd id="order_login" style="display: none;">
+								<a href="#/order">订单管理</a>
+							</dd>
+							<dd id="profit_login" style="display: none;">
+								<a href="#/profit">收益统计</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="">设备管理</a>
+						<dl class="layui-nav-child">
+							<dd id="access_login" style="display: none;">
+								<a href="#/access">门禁管理</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="">其他功能管理</a>
+						<dl class="layui-nav-child">
+							<dd id="serviceprovider_login" style="display: none;">
+								<a href="#/serviceprovider">服务商管理</a>
+							</dd>
+							<dd id="repair_login" style="display: none;">
+								<a href="#/repair">报修管理</a>
+							</dd>
+							<dd id="app_login" style="display: none;">
+								<a href="#/app">APP管理</a>
+							</dd>
+							<dd id="integral_login" style="display: none;">
+								<a href="#/integral">积分管理</a>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="view" ng-view></div>
+	</div>
+	<script src='js/link/jquery.min.js'></script>
+	<script src="js/link/bootstrap.min.js"></script>
+	<script src="js/link/jquery.jedate.min.js"></script>
+	<script src="js/link/jquery-form.js"></script>
+	<script src="js/link/md5.js"></script>
+	<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js"></script>
+    <script src="layui/layui.js"></script>
+    <!--<script src="js/nav.js"></script>-->
+    <script src="js/angular/app.js"></script>
+    <script src="js/angular/space.js"></script>
+    <script src="js/angular/ference.js"></script>
+    <script src="js/angular/site.js"></script>
+    <script src="js/angular/member.js"></script>
+    <script src="js/angular/enterprise.js"></script>
+    
+    <script src="js/angular/activity.js"></script>
+    <script src="js/angular/addActivity.js"></script>
+    <script src="js/angular/editActivity.js"></script>
+    
+    <script src="js/angular/information.js"></script>
+    <script src="js/angular/addInformation.js"></script>
+    <script src="js/angular/editInformation.js"></script>
+    
+    <script src="js/angular/department.js"></script>
+    <script src="js/angular/social.js"></script>
+    <script src="js/angular/station.js"></script>
+    <script src="js/angular/complaint.js"></script>
+</body>
+<script>
+	//JavaScript代码区域
+	layui.use('element', function(){
+	  var element = layui.element;
+	  element.init()
+	});
+</script>
+</html>

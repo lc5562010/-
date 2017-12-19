@@ -1,0 +1,41 @@
+<div class="complaint">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_complaint">
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+	</div>
+<!--会议室列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>用户名称</th>
+			      <th>用户联系方式</th>
+			      <th>提交时间</th>
+			      <th>建议内容</th>
+			      <th>状态</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="complaint in complaintInfo">
+			      <td>{{complaint.userName}}</td>
+			      <td>{{complaint.tel}}</td>
+			      <td>{{complaint.putTime}}</td>
+			      <td>{{complaint.complainContent}}</td>
+			      <td>{{complaint.state}}</td>
+			      <td>
+			      	<div class="layui-btn-group" ng-show="complaint.state=='未查看'">
+					  <button class="layui-btn layui-btn-sm" ng-click="edit_complaint($index,complaintInfo)">
+					       已查看
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_complaint"></div>
+	</div>
+</div>
+

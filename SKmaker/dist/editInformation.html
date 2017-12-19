@@ -1,0 +1,38 @@
+<div class="add_information">
+	<form name="informationForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_informationform">
+		<p>
+			<label for="title">资讯标题</label>
+	    	<input type="text" name="title" id="title" ng-model="edit_informationInfo.title" required="required" />
+	    	<span class="warning" ng-show="informationForm_edit.title.$error.required">*</span>
+		</p>
+		<p>
+			<label for="messageInfo">资讯描述</label>
+			<textarea type="text" name="messageInfo" id="messageInfo" ng-model="edit_informationInfo.messageInfo" required="required" style="width: 60%;height: 80px;"></textarea>
+	    	<span class="warning" ng-show="informationForm_edit.messageInfo.$error.required">*</span>
+		</p>
+		<p>
+			<label for="writer">发布作者</label>
+	    	<input type="text" name="writer" id="writer" ng-model="edit_informationInfo.writer" required="required" />
+	    	<span class="warning" ng-show="informationForm_edit.writer.$error.required">*</span>
+		</p>
+		<p>
+    		<label for="upfile">活动封面图</label>
+    		<span class="warning" style="margin-left: 30px;">只能上传一张图片</span>
+    		<input type="file" name="file" id="ment_editinformation" accept="image/*" class="putImg">
+    		<span class="imgBox">
+    			<img id="imageview" class="showImg">
+    		</span>
+        </p>
+        <label for="editor_editinformation">正文内容编辑：</label>
+	    <script id="editor_editinformation" name="editor_editinformation" type="text/plain" style="width: 100%;height: 500px;"></script>
+	</form>
+	<div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel_information">取消</button>
+	    <button type="button" class="btn btn-primary" ng-disabled="informationForm_edit.$invalid" ng-click="edit_information_sub()">确定</button>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
+
+

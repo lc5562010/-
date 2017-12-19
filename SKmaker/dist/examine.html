@@ -1,0 +1,52 @@
+<div class="ference">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_ference" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+        <span style="color: #fff;">请选择审核状态：</span>
+        <select name="spaceId" id="spaceId_ference" >
+            <option value="0">待审核</option>
+            <option value="1">审核通过</option>
+            <option value="2">审核未通过</option>
+            <option value="3">无需审核</option>
+        </select>
+	</div>
+	<!--审核会议室列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>名称</th>
+			      <th>描述</th>
+			      <th>开放时间</th>
+			      <th>位置</th>
+			      <th>状态</th>
+			      <th>价格</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="ference in ferenceInfo">
+			      <td>{{ference.conferenceName}}</td>
+			      <td>{{ference.conferenceDescribe}}</td>
+			      <td>{{ference.openTime}}</td>
+			      <td>{{ference.location}}</td>
+			      <td>{{ference.conferenceState}}</td>
+			      <td>{{ference.conferencePrice}}</td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_ference_edit" ng-click="edit_ference($index,ferenceInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_ference($index,ferenceInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="examine_ference"></div>
+	</div>
+</div>

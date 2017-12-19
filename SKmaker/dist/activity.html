@@ -1,0 +1,45 @@
+<div class="activity">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_activity" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+		<button class="layui-btn addSpace" id="add_activity">
+		    <i class="layui-icon">&#xe608;</i> 添加活动
+		</button>
+	</div>
+<!--活动列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>活动标题</th>
+			      <th>活动描述</th>
+			      <th>活动封面图</th>
+			      <th>正文内容</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="activity in activityInfo">
+			      <td>{{activity.title}}</td>
+			      <td>{{activity.activityDescribe}}</td>
+			      <td><img src="{{activity.pictureSite}}" alt="....." style="width: 50px;height: 50px;" /></td>
+			      <td><button class="layui-btn" id="add_activity" ng-click="query_activityInfo($index,activityInfo)">查看详情</button></td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" ng-click="edit_activity($index,activityInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_activity($index,activityInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_activity"></div>
+	</div>
+</div>
+

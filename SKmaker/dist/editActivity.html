@@ -1,0 +1,38 @@
+<div class="add_activity">
+	<form name="activityForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_activityform">
+		<p>
+			<label for="spaceId">所在空间</label>
+	    	<select name="spaceId" id="spaceId_editactivity">
+	            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+	        </select>
+		</p>
+		<p>
+			<label for="title">活动标题</label>
+	    	<input type="text" name="title" id="title" ng-model="edit_activityInfo.title" required="required" />
+	    	<span class="warning" ng-show="activityForm_edit.title.$error.required">*</span>
+		</p>
+		<p>
+			<label for="activityDescribe">活动描述</label>
+			<textarea type="text" name="activityDescribe" id="activityDescribe" ng-model="edit_activityInfo.activityDescribe" required="required" style="width: 60%;height: 80px;"></textarea>
+	    	<span class="warning" ng-show="activityForm_edit.activityDescribe.$error.required">*</span>
+		</p>
+		<p>
+    		<label for="upfile">活动封面图</label>
+    		<span class="warning" style="margin-left: 30px;">只能上传一张图片</span>
+    		<input type="file" name="file" id="ment_editactivity" accept="image/*" class="putImg">
+    		<span class="imgBox">
+    			<img id="imageview" class="showImg">
+    		</span>
+        </p>
+        <label for="editor">正文内容编辑：</label>
+	    <script id="editor_edit" name="editor_edit" type="text/plain" style="width: 100%;height: 500px;"></script>
+	</form>
+	<div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="cancel_activity">取消</button>
+	    <button type="button" class="btn btn-primary" ng-disabled="activityForm_edit.$invalid" ng-click="edit_activity_sub()">确定</button>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
+
