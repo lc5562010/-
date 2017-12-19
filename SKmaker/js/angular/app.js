@@ -120,13 +120,8 @@ for(var i=0;i<jurisdiction_login.length;i++) {
 		$("#integral_login")[0].style.display="block";
 	}
 }
-// var serviceURL='http://www.yiliangang.net:8012/workSpace';
-// var serviceURL='http://192.168.7.240:8012/workSpace'
-//var serviceURL='http://219.143.170.98:10011/workSpace';
-// var serviceURL='http://192.168.1.216:8080/workSpace';
 
-
-    var serviceURL='http://192.168.34.80:8080/SKwork';
-//  var serviceURL='http://219.143.170.98:10011/SKwork';
+//  var serviceURL='http://192.168.34.80:8080/SKwork';
+   var serviceURL='http://219.143.170.98:10011/SKwork';
 //  var serviceURL='http://192.168.38.93:8080/SKwork';
 //  var serviceURL='http://192.168.1.216:8080/SKwork';
