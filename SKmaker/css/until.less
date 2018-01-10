@@ -1,14 +1,10 @@
+// 全局公用样式
 * {
     margin: 0;
     padding: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-body {
-    min-width: 1200px;
-    background: #2d2c41;
-    font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
 }
 .clearfix:after {
     content: "\0020";
@@ -18,6 +14,23 @@ body {
 }
 .warning {
     color: #f00;
+}
+.imgBox { //上传图片公用样式
+    margin-top: 20px;
+    margin-left: 20px;
+    display: block;
+    height: 100px;
+}
+.showImg { //上传图片公用样式
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+}
+body {
+    min-width: 1200px;
+    background: #2d2c41;
+    font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
 }
 .header {
     position: fixed;
@@ -100,7 +113,6 @@ body {
         }
     }
 }
-
 #show_img{
     display: none;
     width: 100%;
@@ -143,8 +155,6 @@ body {
         cursor: pointer;
     }
 }
-
-
 //会议室
 .ference label {
     display: inline-block;
@@ -475,5 +485,93 @@ body {
                 }
             }
         }
+    }
+}
+//门禁
+.access label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.access input,.access select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.access {
+    p {
+        margin: 20px auto;
+    }
+}
+//门卡
+.card label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.card input,.card select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.card {
+    p {
+        margin: 20px auto;
+    }
+}
+//账单
+.bill label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.bill input,.bill select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.bill {
+    p {
+        margin: 20px auto;
+    }
+}
+//服务商
+.serviceprovider label {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.serviceprovider input,.serviceprovider select {
+    margin-left: 30px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px; /*css3属性IE不支持*/
+}
+.serviceprovider {
+    p {
+        margin: 20px auto;
     }
 }

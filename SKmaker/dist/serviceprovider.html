@@ -1,0 +1,297 @@
+<link rel="stylesheet" href="css/link/select2.min.css" media="screen" type="text/css" />
+<script src="js/link/select2.min.js"></script>
+<div class="serviceprovider">
+	<div class="clearfix">
+        <span style="color:#fff;">请根据条件筛选：</span>
+        <select name="companyState" id="companyState_serviceprovider" >
+            <option value="全部">全部服务商</option>
+            <option value="待审核">待审核</option>
+            <option value="已通过">已通过</option>
+            <option value="已拒绝">已拒绝</option>
+        </select>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_serviceprovider">
+		    <i class="layui-icon">&#xe608;</i> 添加服务商
+		</button>
+	</div>
+<!--服务商列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>服务商名称</th>
+			      <th>服务商logo</th>
+			      <!-- <th>所在城市</th> -->
+			      <th>联系人</th>
+			      <th>联系人电话</th>
+                  <th>经营范围</th>
+                  <th>服务商类别</th>
+			      <th>服务商状态</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="serviceprovider in serviceproviderInfo">
+			      <td>{{serviceprovider.firmName}}</td>
+			      <td><img src="{{serviceprovider.firmLogo}}" alt="....." width="50px" height="50px" /></td>
+			      <!-- <td>{{serviceprovider.city}}</td> -->
+			      <td>{{serviceprovider.contacts}}</td>
+			      <td>{{serviceprovider.tel}}</td>
+                  <td>{{serviceprovider.businessScope}}</td>
+                  <td>{{serviceprovider.facilitatorType}}</td>
+			      <td>{{serviceprovider.facilitatorState}}</td>
+			      <td ng-show="serviceprovider.facilitatorState=='待审核'" style="min-width: 150px;">
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_serviceprovider_edit" ng-click="sure_serviceprovider($index,serviceproviderInfo)">
+					      <i class="layui-icon">&#xe618;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_serviceprovider_edit" ng-click="refuse_serviceprovider($index,serviceproviderInfo)">
+					      <i class="layui-icon">&#x1006;</i>
+					  </button>
+					</div>
+			      </td>
+			      <td ng-show="serviceprovider.facilitatorState=='已通过'" style="min-width: 100px;">
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_serviceprovider_edit" ng-click="edit_serviceprovider($index,serviceproviderInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_serviceprovider($index,serviceproviderInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			      <td ng-show="serviceprovider.facilitatorState=='已拒绝'">
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" ng-click="del_serviceprovider($index,serviceproviderInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_serviceprovider"></div>
+	</div>
+<!--添加服务商弹出框-->
+	<div class="modal fade" id="myModal_serviceprovider" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加服务商</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="serviceproviderForm" novalidate method="post" enctype="multipart/form-data" id="add_serviceproviderform">
+			        	<p>
+			        		<label for="firmName">服务商名称</label>
+				        	<input type="text" name="firmName" id="firmName" ng-model="firmName" required="required" />
+				        	<span class="warning" ng-show="serviceproviderForm.firmName.$error.required">*</span>
+                        </p>
+                        <!-- <p>
+			        		<label for="city">所在城市</label>
+				        	<input type="text" name="city" id="city" ng-model="city" required="required" />
+				        	<span class="warning" ng-show="serviceproviderForm.city.$error.required">*</span>
+			        	</p> -->
+			        	<p>
+			        		<label for="facilitatorType" style="margin-left:30px;padding-right:30px;">服务商类别</label>
+				        	<select class="js-example-basic-multiple" id="facilitatorType" name="facilitatorTypes[]" required="required" multiple="4">
+                                <option value="数据服务">数据服务</option>
+                                <option value="物联网">物联网</option>
+                                <option value="OTO">OTO</option>
+                                <option value="APP">APP</option>
+                                <option value="信息平台/网站">信息平台/网站</option>
+                                <option value="电商">电商</option>
+                                <option value="软件技术">软件技术</option>
+                                <option value="硬科技">硬科技</option>
+                                <option value="电子产品">电子产品</option>
+                                <option value="AR/VR">AR/VR</option>
+                                <option value="机器人">机器人</option>
+                                <option value="智能家居">智能家居</option>
+                                <option value="无人机">无人机</option>
+                                <option value="影视">影视</option>
+                                <option value="音乐">音乐</option>
+                                <option value="杂志">杂志</option>
+                                <option value="体育">体育</option>
+                                <option value="新媒体">新媒体</option>
+                                <option value="广告">广告</option>
+                                <option value="设计/艺术">设计/艺术</option>
+                                <option value="信贷">信贷</option>
+                                <option value="支付">支付</option>
+                                <option value="征信">征信</option>
+                                <option value="P2P">P2P</option>
+                                <option value="股票">股票</option>
+                                <option value="基金会">基金会</option>
+                                <option value="投资管理">投资管理</option>
+                                <option value="保险">保险</option>
+                                <option value="人力资源">人力资源</option>
+                                <option value="法律/政策">法律/政策</option>
+                                <option value="宣传/公关">宣传/公关</option>
+                                <option value="财务">财务</option>
+                                <option value="信息中介">信息中介</option>
+                                <option value="资讯/策划">资讯/策划</option>
+                                <option value="美食">美食</option>
+                                <option value="出行">出行</option>
+                                <option value="住宿">住宿</option>
+                                <option value="美妆">美妆</option>
+                                <option value="娱乐/游泳">娱乐/游泳</option>
+                                <option value="医疗">医疗</option>
+                                <option value="健身">健身</option>
+                                <option value="教育">教育</option>
+                                <option value="联合办公">联合办公</option>
+                                <option value="NGO">NGO</option>
+                                <option value="制造业">制造业</option>
+                                <option value="原材料">原材料</option>
+                                <option value="其他">其他</option>
+	                        </select>
+				        	<span class="warning">*</span>
+			        	</p>
+			        	<p style="display: none;">
+			        		<label for="facilitatorState">服务商状态</label>
+				        	<input type="text" name="facilitatorState" id="facilitatorState" value="已通过" />
+			        	</p>
+			        	<p>
+			        		<label for="businessScope">经营范围</label>
+				        	<input type="text" name="businessScope" id="businessScope" ng-model="businessScope" />
+			        	</p>
+			        	<p>
+			        		<label for="contacts">联系人</label>
+				        	<input type="text" name="contacts" id="contacts" ng-model="contacts" required="required" />
+				        	<span class="warning" ng-show="serviceproviderForm.contacts.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="tel">联系人电话</label>
+				        	<input type="text" name="tel" id="tel" ng-model="tel" required="required" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" />
+				        	<span class="warning" ng-show="serviceproviderForm.tel.$error.required">*</span>
+				        	<span class="warning" ng-show="serviceproviderForm.tel.$error.pattern">请输入正确手机号</span>
+			        	</p>
+			        	<p>
+			        		<label for="upfile">服务商logo</label>
+			        		<span class="warning" style="margin-left: 30px;">logo只能上传一张图片</span>
+			        		<input type="file" name="file" id="ment_addserviceprovider" accept="image/*" class="putImg">
+			        		<span class="imgBox">
+			        			<img id="imageview" class="showImg">
+			        		</span>
+			            </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="serviceproviderForm.$invalid" ng-click="addserviceprovider()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改服务商弹出框-->
+	<div class="modal fade" id="myModal_serviceprovider_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改服务商</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="serviceproviderForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_serviceproviderform">
+			        	<p>
+			        		<label for="firmName">服务商名称</label>
+				        	<input type="text" name="firmName" id="firmName" ng-model="edit_serviceproviderInfo.firmName" required="required" />
+				        	<span class="warning" ng-show="serviceproviderForm_edit.firmName.$error.required">*</span>
+                        </p>
+                        <p>
+                            <label for="facilitatorType_edit_edit" style="margin-left:30px;padding-right:30px;">服务商类别</label>
+                            <select class="js-example-basic-multiple1" id="facilitatorType_edit" name="facilitatorTypes[]" required="required" multiple="4">
+                                <option value="数据服务">数据服务</option>
+                                <option value="物联网">物联网</option>
+                                <option value="OTO">OTO</option>
+                                <option value="APP">APP</option>
+                                <option value="信息平台/网站">信息平台/网站</option>
+                                <option value="电商">电商</option>
+                                <option value="软件技术">软件技术</option>
+                                <option value="硬科技">硬科技</option>
+                                <option value="电子产品">电子产品</option>
+                                <option value="AR/VR">AR/VR</option>
+                                <option value="机器人">机器人</option>
+                                <option value="智能家居">智能家居</option>
+                                <option value="无人机">无人机</option>
+                                <option value="影视">影视</option>
+                                <option value="音乐">音乐</option>
+                                <option value="杂志">杂志</option>
+                                <option value="体育">体育</option>
+                                <option value="新媒体">新媒体</option>
+                                <option value="广告">广告</option>
+                                <option value="设计/艺术">设计/艺术</option>
+                                <option value="信贷">信贷</option>
+                                <option value="支付">支付</option>
+                                <option value="征信">征信</option>
+                                <option value="P2P">P2P</option>
+                                <option value="股票">股票</option>
+                                <option value="基金会">基金会</option>
+                                <option value="投资管理">投资管理</option>
+                                <option value="保险">保险</option>
+                                <option value="人力资源">人力资源</option>
+                                <option value="法律/政策">法律/政策</option>
+                                <option value="宣传/公关">宣传/公关</option>
+                                <option value="财务">财务</option>
+                                <option value="信息中介">信息中介</option>
+                                <option value="资讯/策划">资讯/策划</option>
+                                <option value="美食">美食</option>
+                                <option value="出行">出行</option>
+                                <option value="住宿">住宿</option>
+                                <option value="美妆">美妆</option>
+                                <option value="娱乐/游泳">娱乐/游泳</option>
+                                <option value="医疗">医疗</option>
+                                <option value="健身">健身</option>
+                                <option value="教育">教育</option>
+                                <option value="联合办公">联合办公</option>
+                                <option value="NGO">NGO</option>
+                                <option value="制造业">制造业</option>
+                                <option value="原材料">原材料</option>
+                                <option value="其他">其他</option>
+                            </select>
+                            <span class="warning">*</span>
+                        </p>
+			        	<p style="display: none;">
+			        		<label for="facilitatorState">服务商状态</label>
+				        	<input type="text" name="facilitatorState" id="facilitatorState" value="已通过" />
+			        	</p>
+			        	<p>
+			        		<label for="businessScope">经营范围</label>
+				        	<input type="text" name="businessScope" id="businessScope" ng-model="edit_serviceproviderInfo.businessScope" />
+			        	</p>
+			        	<p>
+			        		<label for="contacts">联系人</label>
+				        	<input type="text" name="contacts" id="contacts" ng-model="edit_serviceproviderInfo.contacts" required="required" />
+				        	<span class="warning" ng-show="serviceproviderForm_edit.contacts.$error.required">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="tel">联系人电话</label>
+				        	<input type="text" name="tel" id="tel" ng-model="edit_serviceproviderInfo.tel" required="required" ng-pattern="/^1[3|4|5|7|8]\d{9}$/" />
+				        	<span class="warning" ng-show="serviceproviderForm_edit.tel.$error.required">*</span>
+				        	<span class="warning" ng-show="serviceproviderForm_edit.tel.$error.pattern">请输入正确手机号</span>
+			        	</p>
+			        	<p>
+			        		<label for="upfile">服务商logo</label>
+			        		<span class="warning" style="margin-left: 30px;">logo只能上传一张图片</span>
+			        		<input type="file" name="file" id="ment_editserviceprovider" accept="image/*" class="putImg">
+			        		<span class="imgBox">
+			        			<img id="imageview4" class="showImg">
+			        		</span>
+			            </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="serviceproviderForm_edit.$invalid" ng-click="edit_serviceprovider_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<script language="javascript">
+	// 下拉框搜索功能
+	setTimeout(function() {
+		$(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+            $('.js-example-basic-multiple1').select2();
+		});
+	},1000);
+</script>
+

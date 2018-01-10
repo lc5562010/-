@@ -1,0 +1,43 @@
+<div class="repair">
+    <div class="clearfix">
+        <span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_repair" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+    </div>
+<!--报修列表-->
+    <div style="margin-top: 20px;color: #fff;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>联系电话</th>
+                    <th>报修类型</th>
+                    <th>报修内容</th>
+                    <th>地址</th>
+                    <th>图片</th>
+                    <th>状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="repair in repairInfo">
+                    <td>{{repair.userName}}</td>
+                    <td>{{repair.phone}}</td>
+                    <td>{{repair.type}}</td>
+                    <td>{{repair.info}}</td>
+                    <td>{{repair.address}}</td>
+                    <td>{{repair.conrepairPrice}}</td>
+                    <td>{{repair.state}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="test_repair"></div>
+    </div>
+    <!--大图展示-->
+    <div id="show_img">
+        <span class="left_btn"></span>
+        <span><img src="" style="max-height: 60%;max-width: 60%;z-index: 2222"></span>
+        <span class="right_btn"></span>
+    </div>
+</div>
+    

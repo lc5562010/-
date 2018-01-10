@@ -122,13 +122,17 @@ app.controller('siteCtrl',function ($scope,$http) {
         $("#add_ferenceform").ajaxSubmit(options_addference);
         return false;
 	}
-//	查询会议室
+//	查询场地
 	$scope.query_ference=function(){
+		var pageNo_ference=sessionStorage.getItem("pageNo_ference");
+		if(pageNo_ference == null) {
+			var pageNo_ference=1;
+		}
 		var spaceId=sessionStorage.getItem("stor_spaceId");
 		$http({
 	        method:'post',          
 	        url:serviceURL+'/Conference/find',
-	        data:{pageNo:1,pageSize:10,spaceId:spaceId,conferenceType:1},
+	        data:{pageNo:pageNo_ference,pageSize:10,spaceId:spaceId,conferenceType:1},
 	        headers:{'Content-Type':'application/x-www-form-urlencoded'},  
 	        transformRequest: function(obj) {  
 	            var str = [];  
@@ -160,7 +164,8 @@ app.controller('siteCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_ference' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,curr: pageNo_ference
 			        ,limit: 10
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -179,6 +184,7 @@ app.controller('siteCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
+								sessionStorage.setItem("pageNo_ference",obj.curr);
 						        console.log(res);
 						        if(res.data.result !== "查询为空") {
 							        for(var xx=0;xx<res.data.msg.list.length;xx++){
@@ -205,7 +211,7 @@ app.controller('siteCtrl',function ($scope,$http) {
 	    })
 	}
 	
-//  修改会议室请求
+//  修改场地请求
 	$scope.edit_ference=function(e,x) {
 		var conferenceId=x[e].conferenceId;
         sessionStorage.setItem('edit_ference_id',conferenceId);
@@ -223,7 +229,30 @@ app.controller('siteCtrl',function ($scope,$http) {
             }
         }).then(function(res){
             console.log(res);
-            $scope.edit_ferenceInfo=res.data.msg;
+			$scope.edit_ferenceInfo=res.data.msg;
+			if(res.data.msg.conferencePicture !== "") {
+                res.data.msg.conferencePicture=res.data.msg.conferencePicture.split(",");
+                console.log(res.data.msg.conferencePicture.length);
+                if(res.data.msg.conferencePicture.length == 1) {
+                    $(".imgBox img").attr("src","");
+    		        $("#imageview4").attr("src",serviceURL+res.data.msg.conferencePicture[0]);
+                } else if(res.data.msg.conferencePicture.length == 2) {
+                    $(".imgBox img").attr("src","");
+                    $("#imageview4").attr("src",serviceURL+res.data.msg.conferencePicture[0]);
+                    $("#imageview5").attr("src",serviceURL+res.data.msg.conferencePicture[1]);
+                } else if(res.data.msg.conferencePicture.length == 3) {
+                    $(".imgBox img").attr("src","");
+                    $("#imageview4").attr("src",serviceURL+res.data.msg.conferencePicture[0]);
+                    $("#imageview5").attr("src",serviceURL+res.data.msg.conferencePicture[1]);
+                    $("#imageview6").attr("src",serviceURL+res.data.msg.conferencePicture[2]);
+                } else if(res.data.msg.conferencePicture.length == 4) {
+                    $(".imgBox img").attr("src","");
+                    $("#imageview4").attr("src",serviceURL+res.data.msg.conferencePicture[0]);
+                    $("#imageview5").attr("src",serviceURL+res.data.msg.conferencePicture[1]);
+                    $("#imageview6").attr("src",serviceURL+res.data.msg.conferencePicture[2]);
+                    $("#imageview7").attr("src",serviceURL+res.data.msg.conferencePicture[3]);
+                }
+            }
             function firstVisit(rId,rValue){
                 var rObj = document.getElementById(rId);
                 for(var i = 0;i < rObj.options.length;i++){
@@ -237,7 +266,7 @@ app.controller('siteCtrl',function ($scope,$http) {
             firstVisit('conferenceState_edit',res.data.msg.conferenceState);
         })
 	}
-//	修改会议室提交
+//	修改场地提交
 	$scope.edit_ference_sub=function(){
         var options_editFerence={
 			url:serviceURL+'/Conference/addConference?conferenceId='+sessionStorage.getItem('edit_ference_id'),
@@ -260,7 +289,7 @@ app.controller('siteCtrl',function ($scope,$http) {
         $("#edit_ferenceform").ajaxSubmit(options_editFerence);
         return false;
     }
-//	删除会议室
+//	删除场地
 	$scope.del_ference=function(e,x){
         function confirmAct() { 
             if(confirm('确定要执行此操作吗?')) 
@@ -298,8 +327,4 @@ app.controller('siteCtrl',function ($scope,$http) {
         $scope.number =sessionStorage.getItem('stor_spaceId');
         $scope.query_ference();
 	})
-//	预约会议室审核
-	$scope.examine=function() {
-		window.location.href="index.html#/examine";
-	}
 })

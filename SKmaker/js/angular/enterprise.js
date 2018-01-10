@@ -105,17 +105,21 @@ app.controller('enterpriseCtrl',function ($scope,$http) {
 	}
 //	查询企业
 	$scope.query_enterprise=function(x){
+        var pageNo_enterprise=sessionStorage.getItem("pageNo_enterprise");
+        if(pageNo_enterprise == null) {
+            var pageNo_enterprise=1;
+        }
 		var spaceId=sessionStorage.getItem("stor_spaceId");
 		if(x == 4) {
-			var data={pageNo:1,pageSize:10,spaceId:spaceId};
+			var data={pageNo:pageNo_enterprise,pageSize:10,spaceId:spaceId};
 		} else if(x == 0) {
-			var data={pageNo:1,pageSize:10,spaceId:spaceId,companyState:0};
+			var data={pageNo:pageNo_enterprise,pageSize:10,spaceId:spaceId,companyState:0};
 		} else if(x == 1) {
-			var data={pageNo:1,pageSize:10,spaceId:spaceId,companyState:1};
+			var data={pageNo:pageNo_enterprise,pageSize:10,spaceId:spaceId,companyState:1};
 		} else if(x == 2) {
-			var data={pageNo:1,pageSize:10,spaceId:spaceId,companyState:2};
+			var data={pageNo:pageNo_enterprise,pageSize:10,spaceId:spaceId,companyState:2};
 		} else if(x == 3) {
-			var data={pageNo:1,pageSize:10,spaceId:spaceId,companyState:3};
+			var data={pageNo:pageNo_enterprise,pageSize:10,spaceId:spaceId,companyState:3};
 		}
 		$http({
 	        method:'post',          
@@ -153,7 +157,8 @@ app.controller('enterpriseCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_enterprise' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+                    ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+                    ,curr: pageNo_enterprise
 			        ,limit: 10
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -183,7 +188,8 @@ app.controller('enterpriseCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
-						        console.log(res);
+                                console.log(res);
+                                sessionStorage.setItem("pageNo_enterprise",obj.curr);
 						        if(res.data.result !== "查询为空") {
 							        for(var xx=0;xx<res.data.msg.list.length;xx++){
 							            if(res.data.msg.list[xx].companyState==0){
@@ -234,6 +240,10 @@ app.controller('enterpriseCtrl',function ($scope,$http) {
         }).then(function(res){
             console.log(res);
             $scope.edit_enterpriseInfo=res.data.msg;
+            if(res.data.msg.companyPicture !== "") {
+                $(".imgBox img").attr("src","");
+                $("#imageview4").attr("src",serviceURL+res.data.msg.companyPicture);
+            }
             function firstVisit(rId,rValue){
                 var rObj = document.getElementById(rId);
                 for(var i = 0;i < rObj.options.length;i++){

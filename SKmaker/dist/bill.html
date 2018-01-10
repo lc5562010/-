@@ -1,0 +1,121 @@
+<div class="bill">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_bill" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+	</div>
+<!--账单列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      
+			      <th>账单类型</th>
+			      <th>公司名称</th>
+			      <th>应付金额</th>
+                  <th>实收金额</th>
+                  <th>到期日期</th>
+                  <th>付款日期</th>
+                  <th>收款状态</th>
+			      <th>开票状态</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="bill in billInfo">
+			      <td>{{bill.billType}}</td>
+			      <td>{{bill.companyName}}</td>
+			      <td>{{bill.stallMoney}}</td>
+                  <td>{{bill.unpaidMoney}}</td>
+                  <td>{{bill.dueDate}}</td>
+			      <td>{{bill.payDay}}</td>
+                  <td>{{bill.gatheringState}}</td>
+			      <td>{{bill.invoice}}</td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_bill_more" ng-click="more_bill($index,billInfo)">查看详情</button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_bill"></div>
+	</div>
+<!--查看详情弹出框-->
+	<div class="modal fade" id="myModal_bill_more"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;min-width:1000px;margin-left:-500px;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">账单详情</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<table class="table table-bordered">
+                        <thead>
+                            <tr>
+                              
+                              <th>账单类型</th>
+                              <th>公司名称</th>
+                              <th>应付金额</th>
+                              <th>实收金额</th>
+                              <th>到期日期</th>
+                              <th>付款日期</th>
+                              <th>收款状态</th>
+                              <th>开票状态</th>
+                              <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="bill in more_billInfo">
+                              <td>{{bill.billType}}</td>
+                              <td>{{bill.companyName}}</td>
+                              <td>{{bill.stallMoney}}</td>
+                              <td>{{bill.unpaidMoney}}</td>
+                              <td>{{bill.dueDate}}</td>
+                              <td>{{bill.payDay}}</td>
+                              <td>{{bill.gatheringState}}</td>
+                              <td>{{bill.invoice}}</td>
+                              <td>
+                                <div class="layui-btn-group">
+                                    <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_bill_edit" ng-click="edit_bill($index,billInfo)">
+                                        <i class="layui-icon">&#xe642;</i>
+                                    </button>
+                                    <button class="layui-btn layui-btn-sm" ng-click="edit_Billing($index,more_billInfo)">已开票</button>
+                                </div>
+                              </td>
+                            </tr>
+                        </tbody>
+                    </table>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改账单实付金额弹出框-->
+	<div class="modal fade" id="myModal_bill_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改账单付款状态</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="billForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_billform">
+			        	<p>
+			        		<label for="unpaidMoney">实付款金额</label>
+				        	<input type="text" name="unpaidMoney" id="unpaidMoney" ng-model="edit_billInfo.unpaidMoney" required="required" />
+				        	<span class="warning" ng-show="billForm_edit.unpaidMoney.$error.required">*</span>
+			        	</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="billForm_edit.$invalid" ng-click="edit_bill_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>

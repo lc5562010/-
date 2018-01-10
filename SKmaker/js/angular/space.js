@@ -72,7 +72,7 @@ app.controller('spaceCtrl',function ($scope,$http) {
     		alert("您最多可以上传4张图片！");
     	}
     });
-//  图片显示
+//  大图显示
     $scope.show_img=function(x){
         $('#show_img').css('display','table');
         $('#show_img img').attr('src',x[0]);
@@ -106,13 +106,14 @@ app.controller('spaceCtrl',function ($scope,$http) {
         return false
     })
 //  查询空间
-//	sessionStorage.setItem("pageNo_space",1);
 	var pageNo_space=sessionStorage.getItem("pageNo_space");
-	
+	if(pageNo_space == null) {
+        var pageNo_space=1;
+    }
 	$http({
         method:'post',          
         url:serviceURL+'/Space/find',
-        data:{pageNo:1,pageSize:5,staffId:staffId},
+        data:{pageNo:pageNo_space,pageSize:5,staffId:staffId},
         headers:{'Content-Type':'application/x-www-form-urlencoded'},  
         transformRequest: function(obj) {  
             var str = [];  
@@ -126,10 +127,10 @@ app.controller('spaceCtrl',function ($scope,$http) {
         if(res.data.result !== "查询为空") {
 	        for(var xx=0;xx<res.data.msg.list.length;xx++){
 	            if(res.data.msg.list[xx].spaceState==0){
-	                res.data.msg.list[xx].spaceState='运营中'
+	                res.data.msg.list[xx].spaceState='运营中';
 	            }
 	            if(res.data.msg.list[xx].spaceState==1){
-	                res.data.msg.list[xx].spaceState='未运营'
+	                res.data.msg.list[xx].spaceState='未运营';
 	            }
 	            res.data.msg.list[xx].spacePicture=(res.data.msg.list[xx].spacePicture).split(',');
 	            for(cc=0;cc<res.data.msg.list[xx].spacePicture.length;cc++){
@@ -142,11 +143,12 @@ app.controller('spaceCtrl',function ($scope,$http) {
 		    var laypage = layui.laypage;
 			laypage.render({
 		        elem: 'test_space' //注意，这里的 test1 是 ID，不用加 # 号
-		        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
-		        ,limit: 5
+                ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+                ,curr: pageNo_space
+                ,limit: 5
 		        ,jump: function(obj, first){
 				    //obj包含了当前分页的所有参数，比如：
-				    //首次不执行
+                    //首次不执行
 				    if(!first){
 					    $http({
 					        method:'post',          
@@ -162,14 +164,14 @@ app.controller('spaceCtrl',function ($scope,$http) {
 					        }
 					    }).then(function(res){
 					        console.log(res);
-					        sessionStorage.setItem("pageNo_space",obj.curr)
+					        sessionStorage.setItem("pageNo_space",obj.curr);
 					        if(res.data.result !== "查询为空") {
 						        for(var xx=0;xx<res.data.msg.list.length;xx++){
 						            if(res.data.msg.list[xx].spaceState==0){
-						                res.data.msg.list[xx].spaceState='运营中'
+						                res.data.msg.list[xx].spaceState='运营中';
 						            }
 						            if(res.data.msg.list[xx].spaceState==1){
-						                res.data.msg.list[xx].spaceState='未运营'
+						                res.data.msg.list[xx].spaceState='未运营';
 						            }
 						            res.data.msg.list[xx].spacePicture=(res.data.msg.list[xx].spacePicture).split(',');
 						            for(cc=0;cc<res.data.msg.list[xx].spacePicture.length;cc++){
@@ -229,6 +231,29 @@ app.controller('spaceCtrl',function ($scope,$http) {
         }).then(function(res){
             console.log(res);
             $scope.edit_spaceInfo=res.data.msg;
+            if(res.data.msg.spacePicture !== "") {
+                res.data.msg.spacePicture=res.data.msg.spacePicture.split(",");
+                console.log(res.data.msg.spacePicture.length);
+                if(res.data.msg.spacePicture.length == 1) {
+                    $(".imgBox img").attr("src","");
+    		        $("#imageview4").attr("src",serviceURL+res.data.msg.spacePicture[0]);
+                } else if(res.data.msg.spacePicture.length == 2) {
+                    $(".imgBox img").attr("src","");
+                    $("#imageview4").attr("src",serviceURL+res.data.msg.spacePicture[0]);
+                    $("#imageview5").attr("src",serviceURL+res.data.msg.spacePicture[1]);
+                } else if(res.data.msg.spacePicture.length == 3) {
+                    $(".imgBox img").attr("src","");
+                    $("#imageview4").attr("src",serviceURL+res.data.msg.spacePicture[0]);
+                    $("#imageview5").attr("src",serviceURL+res.data.msg.spacePicture[1]);
+                    $("#imageview6").attr("src",serviceURL+res.data.msg.spacePicture[2]);
+                } else if(res.data.msg.spacePicture.length == 4) {
+                    $(".imgBox img").attr("src","");
+                    $("#imageview4").attr("src",serviceURL+res.data.msg.spacePicture[0]);
+                    $("#imageview5").attr("src",serviceURL+res.data.msg.spacePicture[1]);
+                    $("#imageview6").attr("src",serviceURL+res.data.msg.spacePicture[2]);
+                    $("#imageview7").attr("src",serviceURL+res.data.msg.spacePicture[3]);
+                }
+            }
             $scope.creationTime_edit=res.data.msg.creationTime.split(" ")[0];
             function firstVisit(rId,rValue){
                 var rObj = document.getElementById(rId);

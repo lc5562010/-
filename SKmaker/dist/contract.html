@@ -1,0 +1,67 @@
+<script src='js/link/FileSaver.js'></script>
+<script src="js/link/jquery.wordexport.js"></script>
+<div class="contract">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_contract" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+		</select>
+		<div style="margin-top:20px;">
+			<span style="color: #fff;">请选择企业名称：</span>
+			<select name="companyId" id="enterprise_contract" >
+				<option value="">请选择企业</option>
+				<option ng-repeat="company in companyInfo" value={{company.companyId}} ng-bind="company.companyName"></option>
+			</select>
+			<span style="color: #fff;margin-left:50px;">请选择合同类型：</span>
+			<select name="contractType" id="contractType" >
+				<option value="">请选择合同类型</option>
+				<option value="1">大面积合同</option>
+				<option value="2">工位合同</option>
+			</select>
+			<button class="layui-btn addSpace" ng-click="Introduce_contract()">
+				<i class="layui-icon">&#xe608;</i> 添加合同
+			</button>
+		</div>
+	</div>
+<!--合同列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>合同编号</th>
+			      <th>企业名称</th>
+			      <th>开始时间</th>
+				  <th>结束时间</th>
+				  <th>合同类型</th>
+			      <th>合同状态</th>
+			      <th>合同详情</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="contract in contractInfo">
+			      <td>{{contract.contractNo}}</td>
+			      <td>{{contract.companyName}}</td>
+			      <td>{{contract.serveStarTime}}</td>
+				  <td>{{contract.serveEndTime}}</td>
+				  <td>{{contract.contractType}}</td>
+			      <td>{{contract.contractState}}</td>
+			      <td>
+					<button class="layui-btn" ng-click="query_contractInfo($index,contractInfo)">查看详情</button>
+				  </td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_contract_edit" ng-click="edit_contract($index,contractInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_contract($index,contractInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_contract"></div>
+	</div>
+</div>

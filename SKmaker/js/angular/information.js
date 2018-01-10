@@ -9,12 +9,16 @@ app.controller('informationCtrl',function ($scope,$http) {
 		sessionStorage.setItem('edit_information_id',messageId);
 		window.location.href="#/editInformation";
 	}
-//	查询喜讯
+//	查询资讯
 	$scope.query_information=function(){
+		var pageNo_information=sessionStorage.getItem("pageNo_information");
+		if(pageNo_information == null) {
+			var pageNo_information=1;
+		}
 		$http({
 	        method:'post',          
 	        url:serviceURL+'/Message/find',
-	        data:{pageNo:1,pageSize:10},
+	        data:{pageNo:pageNo_information,pageSize:10},
 	        headers:{'Content-Type':'application/x-www-form-urlencoded'},  
 	        transformRequest: function(obj) {  
 	            var str = [];  
@@ -36,7 +40,8 @@ app.controller('informationCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_information' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,curr: pageNo_information
 			        ,limit: 10
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -55,7 +60,8 @@ app.controller('informationCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
-						        console.log(res);
+								console.log(res);
+								sessionStorage.setItem("pageNo_information",obj.curr);
 						        if(res.data.result !== "查询为空") {
 							        for(var xx=0;xx<res.data.msg.list.length;xx++){
 							            res.data.msg.list[xx].pictureSite=serviceURL+res.data.msg.list[xx].pictureSite;

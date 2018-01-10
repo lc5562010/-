@@ -61,6 +61,38 @@ app.config(['$routeProvider', function($routeProvider){
     .when('/complaint',{
     	templateUrl:'dist/complaint.html',
         controller:'complaintCtrl'
+	})
+	.when('/access',{
+    	templateUrl:'dist/access.html',
+        controller:'accessCtrl'
+	})
+	.when('/order',{
+    	templateUrl:'dist/order.html',
+        controller:'orderCtrl'
+	})
+	.when('/contract',{
+    	templateUrl:'dist/contract.html',
+        controller:'contractCtrl'
+	})
+	.when('/visitor',{
+    	templateUrl:'dist/visitor.html',
+        controller:'visitorCtrl'
+	})
+	.when('/card',{
+    	templateUrl:'dist/card.html',
+        controller:'cardCtrl'
+	})
+	.when('/bill',{
+    	templateUrl:'dist/bill.html',
+        controller:'billCtrl'
+	})
+	.when('/serviceprovider',{
+    	templateUrl:'dist/serviceprovider.html',
+        controller:'serviceproviderCtrl'
+	})
+	.when('/repair',{
+    	templateUrl:'dist/repair.html',
+        controller:'repairCtrl'
     })
     .otherwise({redirectTo:'/space'});
 }]);
@@ -110,6 +142,8 @@ for(var i=0;i<jurisdiction_login.length;i++) {
 		$("#profit_login")[0].style.display="block";
 	} else if(jurisdiction_login[i] == "门禁管理") {
 		$("#access_login")[0].style.display="block";
+	} else if(jurisdiction_login[i] == "门卡管理") {
+		$("#card_login")[0].style.display="block";
 	} else if(jurisdiction_login[i] == "服务商管理") {
 		$("#serviceprovider_login")[0].style.display="block";
 	} else if(jurisdiction_login[i] == "报修管理") {
@@ -121,7 +155,7 @@ for(var i=0;i<jurisdiction_login.length;i++) {
 	}
 }
 
-//  var serviceURL='http://192.168.34.80:8080/SKwork';
-   var serviceURL='http://219.143.170.98:10011/SKwork';
+ var serviceURL='http://192.168.34.80:8080/SKwork';
+//  var serviceURL='http://219.143.170.98:10011/SKwork';
 //  var serviceURL='http://192.168.38.93:8080/SKwork';
 //  var serviceURL='http://192.168.1.216:8080/SKwork';

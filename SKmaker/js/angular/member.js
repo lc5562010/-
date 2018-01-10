@@ -24,11 +24,15 @@ app.controller('memberCtrl',function ($scope,$http) {
     })
 //	查询会员
 	$scope.query_member=function(){
+        var pageNo_member=sessionStorage.getItem("pageNo_member");
+        if(pageNo_member == null) {
+            var pageNo_member=1;
+        }
 		var spaceId=sessionStorage.getItem("stor_spaceId");
 		$http({
 	        method:'post',          
 	        url:serviceURL+'/User/find',
-	        data:{pageNo:1,pageSize:10,spaceId:spaceId},
+	        data:{pageNo:pageNo_member,pageSize:10,spaceId:spaceId},
 	        headers:{'Content-Type':'application/x-www-form-urlencoded'},  
 	        transformRequest: function(obj) {  
 	            var str = [];  
@@ -44,7 +48,8 @@ app.controller('memberCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_member' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+                    ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+                    ,curr: pageNo_member
 			        ,limit: 10
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -63,7 +68,8 @@ app.controller('memberCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
-						        console.log(res);
+                                console.log(res);
+                                sessionStorage.setItem("pageNo_member",obj.curr);
 						        $scope.memberInfo=res.data.msg.list;
 						    })
 					    }

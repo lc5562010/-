@@ -1,0 +1,37 @@
+<div class="visitor">
+    <div class="clearfix">
+        <span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_visitor" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+    </div>
+<!--访客列表-->
+    <div style="margin-top: 20px;color: #fff;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>访客手机号</th>
+                    <th>访问类型</th>
+                    <th>受访者姓名</th>
+                    <th>访问人数</th>
+                    <th>来访事由</th>
+                    <th>到访日期</th>
+                    <th>访问状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="visitor in visitorInfo">
+                    <td>{{visitor.visitorTel}}</td>
+                    <td>{{visitor.accessType}}</td>
+                    <td>{{visitor.targetName}}</td>
+                    <td>{{visitor.peopleNum}}</td>
+                    <td>{{visitor.visitorInfo}}</td>
+                    <td>{{visitor.visitTime}}</td>
+                    <td>{{visitor.infoState}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="test_visitor"></div>
+    </div>
+</div>
+    

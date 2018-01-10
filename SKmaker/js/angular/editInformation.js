@@ -38,7 +38,10 @@ app.controller('editInformationCtrl',function ($scope,$http) {
 	            }
 	        }).then(function(res){
 	            console.log(res);
-	            $scope.edit_informationInfo=res.data.msg;
+				$scope.edit_informationInfo=res.data.msg;
+				if(res.data.msg.spacePicture !== "") {
+					$("#imageview").attr("src",serviceURL+res.data.msg.pictureSite);
+				}
 	            var value = res.data.msg.spared3;
 	            ue_editor_editinformation.execCommand('insertHtml', value);
 	        })

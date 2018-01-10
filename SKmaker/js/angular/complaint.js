@@ -25,11 +25,15 @@ app.controller('complaintCtrl',function ($scope,$http) {
     })
 //	查询建议
 	$scope.query_complaint=function(){
+		var pageNo_complaint=sessionStorage.getItem("pageNo_complaint");
+		if(pageNo_complaint == null) {
+			var pageNo_complaint=1;
+		}
 		var spaceId=sessionStorage.getItem("stor_spaceId");
 		$http({
 	        method:'post',          
 	        url:serviceURL+'/Suggest/find',
-	        data:{pageNo:1,pageSize:10,spaceId:spaceId},
+	        data:{pageNo:pageNo_complaint,pageSize:10,spaceId:spaceId},
 	        headers:{'Content-Type':'application/x-www-form-urlencoded'},  
 	        transformRequest: function(obj) {  
 	            var str = [];  
@@ -55,7 +59,8 @@ app.controller('complaintCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_complaint' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,curr: pageNo_complaint
 			        ,limit: 10
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -74,7 +79,8 @@ app.controller('complaintCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
-						        console.log(res);
+								console.log(res);
+								sessionStorage.setItem("pageNo_complaint",obj.curr);
 						        if(res.data.result !== "查询为空") {
 							        for(var xx=0;xx<res.data.msg.list.length;xx++){
 							            if(res.data.msg.list[xx].state==0){

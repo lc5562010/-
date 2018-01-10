@@ -26,11 +26,15 @@ app.controller('stationCtrl',function ($scope,$http) {
     })
 //	请求空间底下所有工位
 	$scope.query_allstation=function(){
+		var pageNo_allstation=sessionStorage.getItem("pageNo_allstation");
+		if(pageNo_allstation == null) {
+			var pageNo_allstation=1;
+		}
 		var spaceId=sessionStorage.getItem("stor_spaceId");
 		$http({
 	        method:'post',          
 	        url:serviceURL+'/StationInfo/find',
-	        data:{pageNo:1,pageSize:40,spaceId:spaceId},
+	        data:{pageNo:pageNo_allstation,pageSize:40,spaceId:spaceId},
 	        headers:{'Content-Type':'application/x-www-form-urlencoded'},  
 	        transformRequest: function(obj) {  
 	            var str = [];  
@@ -59,7 +63,8 @@ app.controller('stationCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_station' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,curr: pageNo_allstation
 			        ,limit: 40
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -78,7 +83,8 @@ app.controller('stationCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
-						        console.log(res);
+								console.log(res);
+								sessionStorage.setItem("pageNo_allstation",obj.curr);
 						        $scope.stationInfo=res.data.msg.list;
 						        if(res.data.result !== "查询为空") {
 						        	for(var xx=0;xx<res.data.msg.list.length;xx++){

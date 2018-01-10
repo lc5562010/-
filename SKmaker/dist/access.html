@@ -1,0 +1,229 @@
+<link rel="stylesheet" href="css/link/select2.min.css" media="screen" type="text/css" />
+<script src="js/link/select2.min.js"></script>
+<div class="access">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_access" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_access">
+		    <i class="layui-icon">&#xe608;</i> 添加门禁
+		</button>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_accessGroup" style="margin-right: 20px;">
+			<i class="layui-icon">&#xe608;</i> 添加门禁组
+		</button>
+	</div>
+<!--门禁列表-->
+<div class="clearfix" style="position: relative;">
+	<div style="margin-top: 20px;width: 200px;float:left;" class="layui-side-scroll">
+		<ul class="layui-nav layui-nav-tree layui-bg-cyan layui-inline" lay-filter="demo">
+			<li class="layui-nav-item" ng-click="query_access()">
+				<a>全部</a>
+			</li>
+			<li class="layui-nav-item" ng-repeat="accessGroup in accessGroupInfo">
+				<a ng-click="query_accessGrouptwo($index,accessGroupInfo)">
+					<span ng-bind="accessGroup.groupingName"></span>
+					<span style="display: inline-block;" ng-click="edit_accessGroup($index,accessGroupInfo);$event.stopPropagation();">
+						<i class="layui-icon">&#xe642;</i>
+					</span>
+					<span style="display: inline-block;" ng-click="del_accessGroup($index,accessGroupInfo);$event.stopPropagation();">
+						<i class="layui-icon">&#xe640;</i>
+					</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div style="margin-top: 20px;color: #fff;float:left;width:76%;margin-left:25px;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>门禁名称</th>
+			      <th>门禁SN码</th>
+				  <th>状态</th>
+				  <th>添加时间</th>
+				  <th>门禁类型</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="access in accessInfo">
+			      <td>{{access.deviceName}}</td>
+			      <td>{{access.deviceCode}}</td>
+				  <td>{{access.isOnline}}</td>
+				  <td>{{access.makeTime}}</td>
+				  <td>{{access.deviceType}}</td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_access_edit" ng-click="edit_access($index,accessInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_access($index,accessInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+	</div>
+</div>
+<!--添加门禁组弹出框-->
+	<div class="modal fade" id="myModal_accessGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加门禁组</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="accessGroupForm" novalidate method="post" enctype="multipart/form-data" id="add_accessGroupForm">
+	            		<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_addaccessGroup">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+			        	</p>
+			        	<p>
+			        		<label for="groupingName">门禁组名称</label>
+				        	<input type="text" name="groupingName" id="groupingName" ng-model="groupingName" required="required" />
+				        	<span class="warning" ng-show="accessGroupForm.groupingName.$error.required">*</span>
+						</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="accessGroupForm.$invalid" ng-click="addaccessGroup()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--添加门禁弹出框-->
+	<div class="modal fade" id="myModal_access" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加门禁</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="accessForm" novalidate method="post" enctype="multipart/form-data" id="add_accessform">
+	            		<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_addaccess">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+			        	</p>
+			        	<p>
+			        		<label for="deviceName">门禁名称</label>
+				        	<input type="text" name="deviceName" id="deviceName" ng-model="deviceName" required="required" />
+				        	<span class="warning" ng-show="accessForm.deviceName.$error.required">*</span>
+						</p>
+			        	<p>
+			        		<label for="deviceCode">门禁SN码</label>
+				        	<input type="text" name="deviceCode" id="deviceCode" ng-model="deviceCode" required="required" />
+				        	<span class="warning" ng-show="accessForm.deviceCode.$error.required">*</span>
+						</p>
+						<p>
+							<label for="deviceType">门禁类型</label>
+							<select name="deviceType" id="deviceType">
+								<option value="2">普通门禁</option>
+								<option value="0">进门门禁</option>
+								<option value="1">出门门禁</option>
+							</select>
+						</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="accessForm.$invalid" ng-click="addaccess()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!-- 修改门禁组弹出框 -->
+	<div class="modal fade" id="myModal_accessGroup_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改门禁</h4>
+				</div>
+				<div class="modal-body">
+					<form name="accessGroupForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_accessGroupform">
+						<p>
+							<label for="spaceId">所在空间</label>
+							<select name="spaceId" id="spaceId_editaccessGroup">
+								<option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+							</select>
+						</p>
+						<p>
+							<label for="groupingName">门禁组名称</label>
+							<input type="text" name="groupingName" id="groupingName" ng-model="edit_accessGroupInfo.groupingName" required="required" />
+							<span class="warning" ng-show="accessGroupForm_edit.groupingName.$error.required">*</span>
+						</p>
+						<p>
+							<label for="deviceIds" style="margin-left:30px;padding-right:30px;">门禁设备</label>
+							<select class="js-example-basic-multiple" name="deviceIds[]" id="deviceIds" multiple>
+								<option ng-repeat="deviceIds in deviceIdsInfo" value={{deviceIds.deviceId}} ng-bind="deviceIds.deviceName"></option>
+							</select>
+						</p>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" ng-disabled="accessGroupForm_edit.$invalid" ng-click="edit_accessGroup_sub()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--修改门禁弹出框-->
+	<div class="modal fade" id="myModal_access_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改门禁</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="accessForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_accessform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_editaccess">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+			        	</p>
+			        	<p>
+			        		<label for="newDeviceName">新门禁名称</label>
+				        	<input type="text" name="newDeviceName" id="newDeviceName" />
+			        	</p>
+			        	<p>
+			        		<label for="newDeviceCode">新门禁SN码</label>
+				        	<input type="text" name="newDeviceCode" id="newDeviceCode" />
+						</p>
+						<p>
+							<label for="deviceType_edit">门禁类型</label>
+							<select name="deviceType" id="deviceType_edit">
+								<option value="-1">请选择门禁类型</option>
+								<option value="2">普通门禁</option>
+								<option value="0">进门门禁</option>
+								<option value="1">出门门禁</option>
+							</select>
+						</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="accessForm_edit.$invalid" ng-click="edit_access_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<script language="javascript">
+	// 下拉框搜索功能
+	setTimeout(function() {
+		$(document).ready(function() {
+			$('.js-example-basic-multiple').select2();
+		});
+	},1000);
+</script>

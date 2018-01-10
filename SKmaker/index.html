@@ -4,63 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>尚科后台管理系统</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/link/bootstrap.min.css" media="screen" type="text/css" />
 	<link rel="stylesheet" href="layui/css/layui.css" media="screen" type="text/css" />
-	<link rel="stylesheet" href="css/link/jedate.css" media="screen" type="text/css" />
     <link rel="stylesheet" href="css/until.css" media="screen" type="text/css" />
-    <!--<link rel="stylesheet" href="css/header.css" media="screen" type="text/css" />-->
 </head>
 
-<style>
-	.imgBox {
-		margin-top: 20px;
-		margin-left: 20px;
-		display: block;
-		height: 100px;
-	}
-	.putImg {
-		
-	}
-	.showImg {
-		display: inline-block;
-		width: 100px;
-		height: 100px;
-		margin-left: 10px;
-	}
-    
-    
-    .station {
-    	color: #333;
-    }
-    .station .addStation {
-    	margin-top: 20px;
-    	float: right;
-    }
-    .station p {
-    	margin: 20px 0;
-    }
-    .station span{
-        color: red;
-    }
-    .station label {
-    	display: inline-block;
-    	width: 100px;
-    	height: 30px;
-    	line-height: 30px;
-    	text-align: right;
-    }
-    .station input,.station select {
-    	margin-left: 30px;
-    	width: 200px;
-    	height: 30px;
-    	line-height: 30px;
-        padding: 5px;
-        padding-left: 10px;
-        border-radius: 3px; /*css3属性IE不支持*/
-    }
-</style>
 <body>
 	<div class="layui-layout layui-layout-admin">
 		<div class="header">
@@ -71,6 +21,7 @@
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 				<ul class="layui-nav layui-nav-tree" lay-filter="test">
 					<li class="layui-nav-item layui-nav-itemed">
+							<!-- layui-nav-itemed -->
 						<a class="" href="javascript:;">运营管理</a>
 						<dl class="layui-nav-child">
 							<dd id="space_login" style="display: none;">
@@ -155,6 +106,9 @@
 							<dd id="access_login" style="display: none;">
 								<a href="#/access">门禁管理</a>
 							</dd>
+							<dd id="card_login" style="display: none;">
+								<a href="#/card">门卡管理</a>
+							</dd>
 						</dl>
 					</li>
 					<li class="layui-nav-item">
@@ -181,7 +135,6 @@
 	</div>
 	<script src='js/link/jquery.min.js'></script>
 	<script src="js/link/bootstrap.min.js"></script>
-	<script src="js/link/jquery.jedate.min.js"></script>
 	<script src="js/link/jquery-form.js"></script>
 	<script src="js/link/md5.js"></script>
 	<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
@@ -206,7 +159,15 @@
     <script src="js/angular/department.js"></script>
     <script src="js/angular/social.js"></script>
     <script src="js/angular/station.js"></script>
-    <script src="js/angular/complaint.js"></script>
+	<script src="js/angular/complaint.js"></script>
+	<script src="js/angular/access.js"></script>
+	<script src="js/angular/order.js"></script>
+	<script src="js/angular/contract.js"></script>
+	<script src="js/angular/visitor.js"></script>
+	<script src="js/angular/card.js"></script>
+	<script src="js/angular/bill.js"></script>
+	<script src="js/angular/serviceprovider.js"></script>
+	<script src="js/angular/repair.js"></script>
 </body>
 <script>
 	//JavaScript代码区域

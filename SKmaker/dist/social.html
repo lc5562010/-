@@ -1,4 +1,3 @@
-
 <div class="social">
 <!--朋友圈列表-->
 	<div style="margin-top: 20px;color: #fff;overflow: hidden;">
@@ -22,9 +21,9 @@
 						</div>
 					</div>
 					<div class="frendInfo" ng-bind="social.circleMessage"></div>
-					<div class="clearfix img-gather" id="thumbs" style="height: 100px;">
+					<div class="clearfix img-gather" id="thumbs" >
 			            <!--<a ng-repeat="img in social.imageMessage track by $index" href="{{img}}" style="background-image:url({{img}});"></a> -->
-			            <img ng-repeat="img in social.imageMessage track by $index" src="{{img}}" width="100px" height="100px" alt="" />
+			            <img ng-repeat="img in social.imageMessage track by $index" src="{{img}}" style="width:100px;height:100px;margin-right:5px;margin-top:5px;" alt="" />
 			        </div>
 					<div class="hf-list-con">
 						<div class="all-pl-con" ng-repeat="reply in social.ReplyRecord">

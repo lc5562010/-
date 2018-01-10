@@ -1,0 +1,38 @@
+<div class="order">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_order" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+	</div>
+<!--订单列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>订单编号</th>
+			      <th>用户名</th>
+			      <th>用户手机号</th>
+			      <th>商品对象</th>
+			      <th>开始时间</th>
+			      <th>结束时间</th>
+                  <th>金额</th>
+                  <th>订单状态</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="order in orderInfo">
+			      <td>{{order.orderNum}}</td>
+			      <td>{{order.userName}}</td>
+			      <td>{{order.userTel}}</td>
+			      <td>{{order.commodityKind}}</td>
+			      <td>{{order.starTime}}</td>
+                  <td>{{order.endTime}}</td>
+                  <td>{{order.money}}</td>
+                  <td>{{order.orderState}}</td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_order"></div>
+	</div>
+</div>

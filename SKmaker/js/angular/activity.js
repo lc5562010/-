@@ -35,11 +35,15 @@ app.controller('activityCtrl',function ($scope,$http) {
     })
 //	查询活动
 	$scope.query_activity=function(){
+		var pageNo_activity=sessionStorage.getItem("pageNo_activity");
+		if(pageNo_activity == null) {
+			var pageNo_activity=1;
+		}
 		var spaceId=sessionStorage.getItem("stor_spaceId");
 		$http({
 	        method:'post',          
 	        url:serviceURL+'/Activity/find',
-	        data:{pageNo:1,pageSize:10,spaceId:spaceId},
+	        data:{pageNo:pageNo_activity,pageSize:10,spaceId:spaceId},
 	        headers:{'Content-Type':'application/x-www-form-urlencoded'},  
 	        transformRequest: function(obj) {  
 	            var str = [];  
@@ -61,7 +65,8 @@ app.controller('activityCtrl',function ($scope,$http) {
 			    var laypage = layui.laypage;
 				laypage.render({
 			        elem: 'test_activity' //注意，这里的 test1 是 ID，不用加 # 号
-			        ,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,count: res.data.msg.totalRecords //数据总数，从服务端得到
+					,curr: pageNo_activity
 			        ,limit: 10
 			        ,jump: function(obj, first){
 					    //obj包含了当前分页的所有参数，比如：
@@ -80,7 +85,8 @@ app.controller('activityCtrl',function ($scope,$http) {
 						            return str.join("&");
 						        }
 						    }).then(function(res){
-						        console.log(res);
+								console.log(res);
+								sessionStorage.setItem("pageNo_activity",obj.curr);
 						        if(res.data.result !== "查询为空") {
 							        for(var xx=0;xx<res.data.msg.list.length;xx++){
 							            res.data.msg.list[xx].pictureSite=serviceURL+res.data.msg.list[xx].pictureSite;

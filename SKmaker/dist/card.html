@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="css/link/select2.min.css" media="screen" type="text/css" />
+<script src="js/link/select2.min.js"></script>
+<div class="card">
+	<div class="clearfix">
+		<span style="color: #fff;">请选择空间名称：</span>
+        <select name="spaceId" id="spaceId_card" >
+            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+        </select>
+		<button class="layui-btn addSpace" data-toggle="modal" data-target="#myModal_card">
+		    <i class="layui-icon">&#xe608;</i> 添加门卡
+		</button>
+	</div>
+<!--门卡列表-->
+	<div style="margin-top: 20px;color: #fff;">
+		<table class="table table-bordered">
+		    <thead>
+			    <tr>
+			      <th>持卡人</th>
+			      <th>持卡人所属公司</th>
+				  <th>门卡有效期</th>
+				  <th>可开门禁组</th>
+			      <th>操作</th>
+			    </tr>
+		    </thead>
+		    <tbody>
+			    <tr ng-repeat="card in cardInfo">
+			      <td>{{card.userName}}</td>
+			      <td>{{card.company}}</td>
+				  <td>{{card.endTime}}</td>
+				  <td>{{card.groupName}}</td>
+			      <td>
+			      	<div class="layui-btn-group">
+					  <button class="layui-btn layui-btn-sm" data-toggle="modal" data-target="#myModal_card_edit" ng-click="edit_card($index,cardInfo)">
+					      <i class="layui-icon">&#xe642;</i>
+					  </button>
+					  <button class="layui-btn layui-btn-sm" ng-click="del_card($index,cardInfo)">
+					      <i class="layui-icon">&#xe640;</i>
+					  </button>
+					</div>
+			      </td>
+			    </tr>
+		    </tbody>
+		</table>
+		<div id="test_card"></div>
+	</div>
+<!--添加门卡弹出框-->
+	<div class="modal fade" id="myModal_card" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">添加门卡</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="cardForm" novalidate method="post" enctype="multipart/form-data" id="add_cardform">
+	            		<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_addcard">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+			        	</p>
+						<p>
+							<label for="company" style="margin-left:30px;padding-right:30px;">企业名称</label>  
+							<select class="js-example-basic-single" name="company" id="company" ng-model="company" required="required">
+								<option value="">请选择企业</option>
+								<option ng-repeat="company in companyInfo" value={{company.companyName}} ng-bind="company.companyName"></option> 
+							</select> 
+							<span class="warning" ng-show="cardForm.company.$error.required">*</span>
+						</p>
+						<p style="margin-left:50px;">
+							<span class="warning">请先选择持卡人再录入卡号，可重复添加！</span>
+						</p>
+						<p>
+							<label for="userName1" style="margin-left:30px;padding-right:30px;">持卡人</label>
+							<select class="js-example-basic-single1" name="userName1" id="userName" ng-model="userName" required="required">
+								<option value="">请选择持卡人</option>
+								<option ng-repeat="userName in userNameInfo" value={{userName.userId}} ng-bind="userName.userName"></option>
+							</select>
+							<span class="warning" ng-show="cardForm.userName1.$error.required">*</span>
+							<button class="layui-btn addSpace" style="margin-top:-30px;display:none;" ng-click="addMoreCard()">
+								<i class="layui-icon">&#xe608;</i> 添加
+							</button>
+						</p>
+						<p>
+							<label for="cardUids">卡号</label>
+							<input type="text" name="cardUids1" id="cardUids" ng-model="cardUids" required="required" disabled="true" />
+							<span class="warning" ng-show="cardForm.cardUids1.$error.required">*</span>
+						</p>
+						<div id="cardBox">
+							
+						</div>
+			        	<p>
+			        		<label for="groupingIds" style="margin-left:30px;padding-right:30px;">门禁权限组</label>
+				        	<select class="js-example-basic-multiple" name="groupingIds[]" id="groupingIds" multiple ng-model="groupingIds" required="required">
+								<option ng-repeat="groupingIds in accessGroupInfo" value={{groupingIds.groupingId}} ng-bind="groupingIds.groupingName"></option>
+                            </select>
+                            <span class="warning">*</span>
+			        	</p>
+			        	<p>
+			        		<label for="endTime">卡可用时间</label>
+				        	<input type="number" name="endTime" id="endTime" ng-model="endTime" required="required" placeholder="最大65535天" />
+				        	<span class="warning" ng-show="cardForm.endTime.$error.required">*</span>
+				        	<span class="warning" ng-show="cardForm.endTime.$error.number">只能输入数字</span>
+			        	</p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="cardForm.$invalid" ng-click="addcard()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<!--修改门卡弹出框-->
+	<div class="modal fade" id="myModal_card_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">修改门卡</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<form name="cardForm_edit" novalidate method="post" enctype="multipart/form-data" id="edit_cardform">
+			        	<p>
+			        		<label for="spaceId">所在空间</label>
+				        	<select name="spaceId" id="spaceId_editcard">
+					            <option ng-repeat="space in spaceInfo" value={{space.spaceId}} ng-bind="space.spaceName"  ng-selected="number==space.spaceId"></option>
+					        </select>
+                        </p>
+                        <!-- <p>
+                            <label for="cardUids">卡号</label>
+                            <input type="text" name="cardUids" id="cardUids" ng-model="edit_cardInfo.cardUids" required="required" />
+                            <span class="warning" ng-show="cardForm_edit.cardUids1.$error.required">*</span>
+                        </p> -->
+                        <p>
+                            <label for="company_edit">持卡人所在企业</label>
+                            <select name="company" id="company_edit">
+                                <option ng-repeat="company in companyInfo" value={{company.companyName}} ng-bind="company.companyName"></option>
+                            </select>
+                        </p>
+			        	<!-- <p>
+                            <label for="userName_edit">持卡人</label>
+                            <select name="userName" id="userName_edit">
+                                <option ng-repeat="userName in userNameInfo" value="{{userName.userName}}" ng-bind="userName.userName"></option>
+                            </select>
+                        </p> -->
+			        	<p>
+                            <label for="deviceIds_edit">可开门禁</label>
+                            <select name="deviceIds" id="deviceIds_edit" multiple style="height:100px;">
+                                <option ng-repeat="deviceIds in deviceIdsInfo" value={{deviceIds.deviceId}} ng-bind="deviceIds.deviceName"></option>
+                            </select>
+                        </p>
+			        	<p>
+                            <label for="endTime">卡可用时间</label>
+                            <input type="number" name="endTime" id="endTime" ng-model="edit_cardInfo.endTime" required="required" placeholder="最大65535天" />
+                            <span class="warning" ng-show="cardForm_edit.endTime.$error.required">*</span>
+                            <span class="warning" ng-show="cardForm_edit.endTime.$error.number">只能输入数字</span>
+                        </p>
+			        </form>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                <button type="button" class="btn btn-primary" ng-disabled="cardForm_edit.$invalid" ng-click="edit_card_sub()">确定</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<script language="javascript">
+	// 下拉框搜索功能
+	setTimeout(function() {
+		$(document).ready(function() {
+			$('.js-example-basic-single').select2();
+			$('.js-example-basic-single1').select2();
+			$('.js-example-basic-multiple').select2();
+		});
+	},1000);
+</script>
